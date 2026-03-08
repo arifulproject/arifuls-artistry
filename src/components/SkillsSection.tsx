@@ -36,13 +36,13 @@ function CircularProgress({ name, level, delay }: { name: string; level: number;
           <circle
             cx="50" cy="50" r={radius}
             fill="none"
-            stroke="hsl(222 30% 15%)"
+            className="stroke-muted"
             strokeWidth="6"
           />
           <motion.circle
             cx="50" cy="50" r={radius}
             fill="none"
-            stroke="url(#gradient)"
+            stroke="url(#skill-gradient)"
             strokeWidth="6"
             strokeLinecap="round"
             strokeDasharray={circumference}
@@ -51,9 +51,9 @@ function CircularProgress({ name, level, delay }: { name: string; level: number;
             transition={{ duration: 1.5, delay: delay + 0.2, ease: "easeOut" }}
           />
           <defs>
-            <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="hsl(187 94% 43%)" />
-              <stop offset="100%" stopColor="hsl(217 91% 53%)" />
+            <linearGradient id="skill-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="hsl(var(--color-tertiary))" />
+              <stop offset="100%" stopColor="hsl(var(--color-accent))" />
             </linearGradient>
           </defs>
         </svg>

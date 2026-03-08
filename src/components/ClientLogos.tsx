@@ -12,7 +12,7 @@ const ClientLogos = () => {
   const inView = useInView(ref, { once: true });
 
   return (
-    <section className="py-16 overflow-hidden border-y border-border/30" ref={ref}>
+    <section className="py-16 overflow-hidden border-y border-border/20" ref={ref}>
       <motion.div
         initial={{ opacity: 0 }}
         animate={inView ? { opacity: 1 } : {}}

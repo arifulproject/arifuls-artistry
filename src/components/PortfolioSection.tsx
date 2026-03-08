@@ -62,7 +62,7 @@ const PortfolioSection = () => {
                     href={project.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="px-5 py-2.5 rounded-lg bg-secondary text-secondary-foreground font-medium text-sm flex items-center gap-2 hover:opacity-90"
+                    className="px-5 py-2.5 rounded-lg bg-accent text-accent-foreground font-medium text-sm flex items-center gap-2 hover:opacity-90"
                   >
                     Live Preview <ExternalLink size={14} />
                   </a>
