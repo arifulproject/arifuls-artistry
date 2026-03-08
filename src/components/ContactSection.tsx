@@ -1,6 +1,6 @@
 import { motion, useInView } from "framer-motion";
 import { useRef, useState } from "react";
-import { Mail, MapPin, Send, Phone, Linkedin, Twitter } from "lucide-react";
+import { Mail, MapPin, Send, Phone, Linkedin, Twitter, ExternalLink } from "lucide-react";
 import { toast } from "sonner";
 
 const ContactSection = () => {
@@ -16,7 +16,7 @@ const ContactSection = () => {
 
   return (
     <section id="contact" className="section-padding" ref={ref}>
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
@@ -42,27 +42,27 @@ const ContactSection = () => {
 
             <div className="space-y-4">
               <a href="mailto:arifullislam1312@gmail.com" className="flex items-center gap-3 text-muted-foreground hover:text-primary transition-colors">
-                <Mail className="text-primary" size={20} />
+                <Mail className="text-primary shrink-0" size={20} />
                 <span>arifullislam1312@gmail.com</span>
               </a>
               <a href="https://wa.me/8801743566895" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-muted-foreground hover:text-primary transition-colors">
-                <Phone className="text-primary" size={20} />
+                <Phone className="text-primary shrink-0" size={20} />
                 <span>+8801743566895 (WhatsApp)</span>
               </a>
               <div className="flex items-center gap-3 text-muted-foreground">
-                <MapPin className="text-primary" size={20} />
+                <MapPin className="text-primary shrink-0" size={20} />
                 <span>Available Worldwide (Remote)</span>
               </div>
             </div>
 
             <div className="flex gap-3 mt-8">
-              <a href="https://www.fiverr.com/arifullislam572" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-lg bg-muted flex items-center justify-center text-muted-foreground hover:text-primary hover:bg-primary/10 transition-all social-icon-hover text-xs font-bold">
-                F
+              <a href="https://www.fiverr.com/arifullislam572" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-lg bg-muted flex items-center justify-center text-muted-foreground hover:text-primary hover:bg-primary/10 transition-all social-icon-hover" aria-label="Fiverr">
+                <ExternalLink size={18} />
               </a>
-              <a href="https://www.linkedin.com/in/ariful-wp-39174b3b5/" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-lg bg-muted flex items-center justify-center text-muted-foreground hover:text-primary hover:bg-primary/10 transition-all social-icon-hover">
+              <a href="https://www.linkedin.com/in/ariful-wp-39174b3b5/" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-lg bg-muted flex items-center justify-center text-muted-foreground hover:text-primary hover:bg-primary/10 transition-all social-icon-hover" aria-label="LinkedIn">
                 <Linkedin size={18} />
               </a>
-              <a href="https://x.com/arif_ahmed_wp" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-lg bg-muted flex items-center justify-center text-muted-foreground hover:text-primary hover:bg-primary/10 transition-all social-icon-hover">
+              <a href="https://x.com/arif_ahmed_wp" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-lg bg-muted flex items-center justify-center text-muted-foreground hover:text-primary hover:bg-primary/10 transition-all social-icon-hover" aria-label="Twitter / X">
                 <Twitter size={18} />
               </a>
             </div>

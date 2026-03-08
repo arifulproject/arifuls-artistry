@@ -1,9 +1,9 @@
-import { Github, Linkedin, Twitter, Heart, Mail, Phone } from "lucide-react";
+import { Linkedin, Twitter, Heart, Mail, Phone, ExternalLink } from "lucide-react";
 
 const Footer = () => {
   return (
     <footer className="border-t border-border/50 py-12">
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-10">
           <div>
             <a href="#home" className="text-xl font-bold text-gradient mb-3 block">
@@ -29,11 +29,11 @@ const Footer = () => {
             <h4 className="font-semibold text-foreground mb-3 text-sm">Contact</h4>
             <div className="space-y-2">
               <a href="mailto:arifullislam1312@gmail.com" className="flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors">
-                <Mail size={14} />
-                arifullislam1312@gmail.com
+                <Mail size={14} className="shrink-0" />
+                <span className="truncate">arifullislam1312@gmail.com</span>
               </a>
               <a href="https://wa.me/8801743566895" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors">
-                <Phone size={14} />
+                <Phone size={14} className="shrink-0" />
                 +8801743566895
               </a>
             </div>
@@ -42,14 +42,14 @@ const Footer = () => {
           <div>
             <h4 className="font-semibold text-foreground mb-3 text-sm">Connect</h4>
             <div className="flex gap-3">
-              <a href="https://www.linkedin.com/in/ariful-wp-39174b3b5/" target="_blank" rel="noopener noreferrer" className="w-9 h-9 rounded-lg bg-muted flex items-center justify-center text-muted-foreground hover:text-primary hover:bg-primary/10 transition-all social-icon-hover">
+              <a href="https://www.linkedin.com/in/ariful-wp-39174b3b5/" target="_blank" rel="noopener noreferrer" className="w-9 h-9 rounded-lg bg-muted flex items-center justify-center text-muted-foreground hover:text-primary hover:bg-primary/10 transition-all social-icon-hover" aria-label="LinkedIn">
                 <Linkedin size={16} />
               </a>
-              <a href="https://x.com/arif_ahmed_wp" target="_blank" rel="noopener noreferrer" className="w-9 h-9 rounded-lg bg-muted flex items-center justify-center text-muted-foreground hover:text-primary hover:bg-primary/10 transition-all social-icon-hover">
+              <a href="https://x.com/arif_ahmed_wp" target="_blank" rel="noopener noreferrer" className="w-9 h-9 rounded-lg bg-muted flex items-center justify-center text-muted-foreground hover:text-primary hover:bg-primary/10 transition-all social-icon-hover" aria-label="Twitter / X">
                 <Twitter size={16} />
               </a>
-              <a href="https://www.fiverr.com/arifullislam572" target="_blank" rel="noopener noreferrer" className="w-9 h-9 rounded-lg bg-muted flex items-center justify-center text-muted-foreground hover:text-primary hover:bg-primary/10 transition-all social-icon-hover">
-                <Github size={16} />
+              <a href="https://www.fiverr.com/arifullislam572" target="_blank" rel="noopener noreferrer" className="w-9 h-9 rounded-lg bg-muted flex items-center justify-center text-muted-foreground hover:text-primary hover:bg-primary/10 transition-all social-icon-hover" aria-label="Fiverr">
+                <ExternalLink size={16} />
               </a>
             </div>
           </div>
