@@ -89,9 +89,7 @@ const VerticalMarquee = ({ items, direction }: VerticalMarqueeProps) => {
 
   return (
     <div className="relative h-[500px] md:h-[600px] overflow-hidden">
-      {/* Top fade */}
       <div className="absolute top-0 left-0 right-0 h-16 bg-gradient-to-b from-background to-transparent z-10 pointer-events-none" />
-      {/* Bottom fade */}
       <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-background to-transparent z-10 pointer-events-none" />
 
       <div className={`flex flex-col ${animClass}`} style={{ height: "max-content" }}>
@@ -111,6 +109,10 @@ const TestimonialsSection = () => {
   const col2 = testimonials.slice(8, 16);
   const col3 = testimonials.slice(16, 24);
 
+  // Mobile: 2 columns, both scroll up
+  const mobileCol1 = testimonials.slice(0, 12);
+  const mobileCol2 = testimonials.slice(12, 24);
+
   return (
     <section id="testimonials" className="section-padding overflow-hidden" ref={ref}>
       <div className="container mx-auto px-4">
@@ -126,15 +128,27 @@ const TestimonialsSection = () => {
           </h2>
         </motion.div>
 
+        {/* Desktop: 3 columns */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={inView ? { opacity: 1 } : {}}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="grid grid-cols-1 md:grid-cols-3 gap-6"
+          className="hidden md:grid md:grid-cols-3 gap-6"
         >
           <VerticalMarquee items={col1} direction="up" />
           <VerticalMarquee items={col2} direction="down" />
           <VerticalMarquee items={col3} direction="up" />
+        </motion.div>
+
+        {/* Mobile: 2 columns, both scroll up */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={inView ? { opacity: 1 } : {}}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="grid grid-cols-2 gap-3 md:hidden"
+        >
+          <VerticalMarquee items={mobileCol1} direction="up" />
+          <VerticalMarquee items={mobileCol2} direction="up" />
         </motion.div>
       </div>
     </section>

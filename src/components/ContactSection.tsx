@@ -1,6 +1,6 @@
 import { motion, useInView } from "framer-motion";
 import { useRef, useState } from "react";
-import { Mail, MapPin, Send, Github, Linkedin, Twitter } from "lucide-react";
+import { Mail, MapPin, Send, Phone, Linkedin, Twitter } from "lucide-react";
 import { toast } from "sonner";
 
 const ContactSection = () => {
@@ -41,10 +41,14 @@ const ContactSection = () => {
             </p>
 
             <div className="space-y-4">
-              <div className="flex items-center gap-3 text-muted-foreground">
+              <a href="mailto:arifullislam1312@gmail.com" className="flex items-center gap-3 text-muted-foreground hover:text-primary transition-colors">
                 <Mail className="text-primary" size={20} />
-                <span>hello@ariful.dev</span>
-              </div>
+                <span>arifullislam1312@gmail.com</span>
+              </a>
+              <a href="https://wa.me/8801743566895" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-muted-foreground hover:text-primary transition-colors">
+                <Phone className="text-primary" size={20} />
+                <span>+8801743566895 (WhatsApp)</span>
+              </a>
               <div className="flex items-center gap-3 text-muted-foreground">
                 <MapPin className="text-primary" size={20} />
                 <span>Available Worldwide (Remote)</span>
@@ -52,15 +56,15 @@ const ContactSection = () => {
             </div>
 
             <div className="flex gap-3 mt-8">
-              {[Github, Linkedin, Twitter].map((Icon, i) => (
-                <a
-                  key={i}
-                  href="#"
-                  className="w-10 h-10 rounded-lg bg-muted flex items-center justify-center text-muted-foreground hover:text-primary hover:bg-primary/10 transition-all social-icon-hover"
-                >
-                  <Icon size={18} />
-                </a>
-              ))}
+              <a href="https://www.fiverr.com/arifullislam572" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-lg bg-muted flex items-center justify-center text-muted-foreground hover:text-primary hover:bg-primary/10 transition-all social-icon-hover text-xs font-bold">
+                F
+              </a>
+              <a href="https://www.linkedin.com/in/ariful-wp-39174b3b5/" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-lg bg-muted flex items-center justify-center text-muted-foreground hover:text-primary hover:bg-primary/10 transition-all social-icon-hover">
+                <Linkedin size={18} />
+              </a>
+              <a href="https://x.com/arif_ahmed_wp" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-lg bg-muted flex items-center justify-center text-muted-foreground hover:text-primary hover:bg-primary/10 transition-all social-icon-hover">
+                <Twitter size={18} />
+              </a>
             </div>
           </motion.div>
 
