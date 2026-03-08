@@ -56,7 +56,7 @@ function OrbitRing({
             }}
           >
             <div className="px-2 py-1 sm:px-3 sm:py-1.5 md:px-4 md:py-2 rounded-full bg-card/90 backdrop-blur-sm border border-border/40 shadow-sm hover:shadow-[0_0_20px_hsl(var(--color-tertiary)/0.3)] hover:border-primary/60 transition-all duration-300 cursor-default whitespace-nowrap">
-              <span className="text-[10px] sm:text-xs md:text-sm font-medium text-foreground">{skill}</span>
+              <span className="text-[8px] sm:text-xs md:text-sm font-medium text-foreground">{skill}</span>
             </div>
           </motion.div>
         );
