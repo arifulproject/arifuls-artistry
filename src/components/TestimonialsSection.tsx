@@ -54,7 +54,7 @@ const testimonials = [
 ];
 
 const ReviewCard = ({ name, role, text, rating, image }: typeof testimonials[0]) => (
-  <div className="shine-border card-glass p-5 rounded-xl shadow-[var(--shadow-card)] w-full mb-4">
+  <div className="card-glass p-5 rounded-xl shadow-[var(--shadow-card)] w-full mb-4">
     <div className="flex items-center gap-3 mb-3">
       <img
         src={image}
