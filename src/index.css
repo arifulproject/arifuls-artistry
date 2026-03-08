@@ -6,13 +6,13 @@
 
 @layer base {
   :root {
-    --background: 187 94% 20%;
+    --background: 192 80% 10%;
     --foreground: 215 25% 89%;
 
-    --card: 222 47% 6%;
+    --card: 192 70% 8%;
     --card-foreground: 215 25% 89%;
 
-    --popover: 222 47% 6%;
+    --popover: 192 70% 8%;
     --popover-foreground: 215 25% 89%;
 
     --primary: 187 94% 43%;
@@ -21,7 +21,7 @@
     --secondary: 217 91% 53%;
     --secondary-foreground: 210 40% 98%;
 
-    --muted: 222 30% 12%;
+    --muted: 192 40% 14%;
     --muted-foreground: 215 20% 55%;
 
     --accent: 187 94% 43%;
@@ -30,19 +30,19 @@
     --destructive: 0 84% 60%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 222 30% 15%;
-    --input: 222 30% 15%;
+    --border: 192 30% 18%;
+    --input: 192 30% 18%;
     --ring: 187 94% 43%;
 
     --radius: 0.75rem;
 
-    --sidebar-background: 222 47% 5%;
+    --sidebar-background: 192 70% 7%;
     --sidebar-foreground: 215 25% 89%;
     --sidebar-primary: 187 94% 43%;
-    --sidebar-primary-foreground: 222 47% 3%;
-    --sidebar-accent: 222 30% 12%;
+    --sidebar-primary-foreground: 192 80% 10%;
+    --sidebar-accent: 192 40% 14%;
     --sidebar-accent-foreground: 215 25% 89%;
-    --sidebar-border: 222 30% 15%;
+    --sidebar-border: 192 30% 18%;
     --sidebar-ring: 187 94% 43%;
 
     /* Custom tokens */
@@ -104,7 +104,7 @@
   width: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: hsl(222 47% 3%);
+  background: hsl(192 80% 10%);
 }
 ::-webkit-scrollbar-thumb {
   background: hsl(222 30% 20%);
