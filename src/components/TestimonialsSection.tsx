@@ -109,13 +109,12 @@ const TestimonialsSection = () => {
   const col2 = testimonials.slice(8, 16);
   const col3 = testimonials.slice(16, 24);
 
-  // Mobile: 2 columns, both scroll up
   const mobileCol1 = testimonials.slice(0, 12);
   const mobileCol2 = testimonials.slice(12, 24);
 
   return (
     <section id="testimonials" className="section-padding overflow-hidden" ref={ref}>
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
@@ -128,7 +127,7 @@ const TestimonialsSection = () => {
           </h2>
         </motion.div>
 
-        {/* Desktop: 3 columns */}
+        {/* Desktop: 3 columns - up/down/up */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={inView ? { opacity: 1 } : {}}
@@ -140,7 +139,7 @@ const TestimonialsSection = () => {
           <VerticalMarquee items={col3} direction="up" />
         </motion.div>
 
-        {/* Mobile: 2 columns, both scroll up */}
+        {/* Mobile: 2 columns - both scroll up */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={inView ? { opacity: 1 } : {}}
