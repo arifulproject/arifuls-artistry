@@ -100,6 +100,10 @@ export default {
           "0%": { transform: "translateX(0%)" },
           "100%": { transform: "translateX(-50%)" },
         },
+        "marquee-reverse": {
+          "0%": { transform: "translateX(-50%)" },
+          "100%": { transform: "translateX(0%)" },
+        },
         "orbit": {
           "0%": { transform: "rotate(0deg) translateX(120px) rotate(0deg)" },
           "100%": { transform: "rotate(360deg) translateX(120px) rotate(-360deg)" },
@@ -129,7 +133,8 @@ export default {
         "slide-in-left": "slide-in-left 0.6s ease-out forwards",
         "float": "float 3s ease-in-out infinite",
         "pulse-glow": "pulse-glow 2s ease-in-out infinite",
-        "marquee": "marquee 30s linear infinite",
+        "marquee": "marquee 20s linear infinite",
+        "marquee-reverse": "marquee-reverse 20s linear infinite",
         "orbit": "orbit 20s linear infinite",
         "spin-slow": "spin-slow 8s linear infinite",
         "counter": "counter 0.5s ease-out forwards",
