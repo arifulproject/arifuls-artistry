@@ -56,7 +56,7 @@ const ContactSection = () => {
                 <a
                   key={i}
                   href="#"
-                  className="w-10 h-10 rounded-lg bg-muted flex items-center justify-center text-muted-foreground hover:text-primary hover:bg-primary/10 transition-all"
+                  className="w-10 h-10 rounded-lg bg-muted flex items-center justify-center text-muted-foreground hover:text-primary hover:bg-primary/10 transition-all social-icon-hover"
                 >
                   <Icon size={18} />
                 </a>
@@ -97,7 +97,7 @@ const ContactSection = () => {
             />
             <button
               type="submit"
-              className="w-full py-3.5 rounded-lg bg-accent text-accent-foreground font-medium flex items-center justify-center gap-2 hover:opacity-90 transition-all hover:scale-[1.02]"
+              className="w-full py-3.5 rounded-lg bg-accent text-accent-foreground font-medium flex items-center justify-center gap-2 btn-premium hover:scale-[1.02]"
             >
               Send Message <Send size={16} />
             </button>

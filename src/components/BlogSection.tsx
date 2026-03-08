@@ -34,7 +34,7 @@ const BlogSection = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.4, delay: i * 0.1 }}
-              className="card-glass overflow-hidden group hover-lift cursor-pointer"
+              className="card-glass overflow-hidden group hover-lift shine-border cursor-pointer"
             >
               <div className="relative overflow-hidden aspect-video">
                 <img src={post.image} alt={post.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />

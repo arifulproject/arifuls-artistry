@@ -54,7 +54,7 @@ const ProcessSection = () => {
                   <h3 className="text-lg font-semibold text-foreground mb-1">{step.title}</h3>
                   <p className="text-sm text-muted-foreground">{step.desc}</p>
                 </div>
-                <div className="relative z-10 w-14 h-14 rounded-full bg-muted border-2 border-primary/50 flex items-center justify-center shrink-0">
+                <div className="relative z-10 w-14 h-14 rounded-full bg-muted border-2 border-primary/50 flex items-center justify-center shrink-0 social-icon-hover">
                   <step.icon className="text-primary" size={22} />
                 </div>
                 <div className="flex-1 hidden md:block" />

@@ -70,7 +70,7 @@ const AboutSection = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.5, delay: i * 0.1 }}
-              className="card-glass p-6 text-center hover-lift"
+              className="card-glass p-6 text-center hover-lift shine-border"
             >
               <stat.icon className="mx-auto mb-3 text-primary" size={28} />
               <NumberTicker value={stat.value} suffix={stat.suffix} />

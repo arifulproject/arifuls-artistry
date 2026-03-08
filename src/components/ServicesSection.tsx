@@ -44,7 +44,7 @@ const ServicesSection = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.4, delay: i * 0.05 }}
-              className={`card-glass p-6 group hover:border-primary/30 transition-all duration-300 hover-lift ${service.span}`}
+              className={`card-glass p-6 group hover:border-primary/30 transition-all duration-300 hover-lift shine-border ${service.span}`}
             >
               <service.icon className="text-primary mb-4 group-hover:scale-110 transition-transform" size={28} />
               <h3 className="font-semibold text-foreground mb-2">{service.title}</h3>
