@@ -75,8 +75,8 @@ const SkillsSection = () => {
           initial={{ opacity: 0, scale: 0.9 }}
           animate={inView ? { opacity: 1, scale: 1 } : {}}
           transition={{ duration: 0.8 }}
-          className="relative mx-auto flex items-center justify-center"
-          style={{ height: "min(80vw, 550px)", maxWidth: 550 }}
+          className="relative mx-auto flex items-center justify-center scale-[0.55] sm:scale-75 md:scale-90 lg:scale-100"
+          style={{ height: 550, width: 550 }}
         >
           {/* Subtle glow behind center */}
           <div className="absolute inset-0 m-auto w-40 h-40 rounded-full bg-primary/5 blur-3xl" />
