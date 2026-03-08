@@ -70,9 +70,9 @@ const SkillsSection = () => {
   const inView = useInView(ref, { once: true, margin: "-100px" });
   const isMobile = useIsMobile();
 
-  const innerRadius = isMobile ? 100 : 160;
-  const outerRadius = isMobile ? 155 : 240;
-  const containerSize = isMobile ? 350 : 550;
+  const innerRadius = isMobile ? 110 : 160;
+  const outerRadius = isMobile ? 170 : 240;
+  const containerSize = isMobile ? 400 : 550;
 
   return (
     <section id="skills" className="section-padding relative overflow-hidden" ref={ref}>
