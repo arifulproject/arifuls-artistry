@@ -92,8 +92,8 @@ const SkillsSection = () => {
           </div>
 
           {/* Orbit rings */}
-          <OrbitRing items={innerRing} radius={Math.min(window.innerWidth * 0.28, 160)} duration={45} />
-          <OrbitRing items={outerRing} radius={Math.min(window.innerWidth * 0.38, 240)} duration={60} reverse />
+          <OrbitRing items={innerRing} radius={160} duration={45} />
+          <OrbitRing items={outerRing} radius={240} duration={60} reverse />
         </motion.div>
       </div>
     </section>
