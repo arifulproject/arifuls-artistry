@@ -1,5 +1,5 @@
 import { motion, useInView } from "framer-motion";
-import { useRef, useState } from "react";
+import { useRef } from "react";
 
 const skills = [
   "WordPress", "PHP", "JavaScript", "HTML", "CSS", "WooCommerce",
@@ -21,20 +21,15 @@ function OrbitRing({
   duration: number;
   reverse?: boolean;
 }) {
-  const [hovered, setHovered] = useState(false);
-
   return (
-    <motion.div
-      className="absolute inset-0 m-auto rounded-full border border-border/20"
-      style={{ width: radius * 2, height: radius * 2 }}
-      animate={{ rotate: reverse ? -360 : 360 }}
-      transition={{
-        duration: hovered ? duration * 3 : duration,
-        repeat: Infinity,
-        ease: "linear",
+    <div
+      className="absolute inset-0 m-auto rounded-full border border-border/20 orbit-ring"
+      style={{
+        width: radius * 2,
+        height: radius * 2,
+        animationDuration: `${duration}s`,
+        animationDirection: reverse ? "reverse" : "normal",
       }}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
     >
       {items.map((skill, i) => {
         const angle = (360 / items.length) * i;
@@ -43,24 +38,22 @@ function OrbitRing({
         const y = Math.sin(rad) * radius;
 
         return (
-          <motion.div
+          <div
             key={skill}
-            className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
-            style={{ x, y }}
-            animate={{ rotate: reverse ? 360 : -360 }}
-            transition={{
-              duration: hovered ? duration * 3 : duration,
-              repeat: Infinity,
-              ease: "linear",
+            className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 orbit-item"
+            style={{
+              transform: `translate(-50%, -50%) translate(${x}px, ${y}px)`,
+              animationDuration: `${duration}s`,
+              animationDirection: reverse ? "normal" : "reverse",
             }}
           >
             <div className="px-3 py-1.5 md:px-4 md:py-2 rounded-full bg-card/90 backdrop-blur-sm border border-border/40 shadow-sm hover:shadow-[0_0_20px_hsl(var(--color-tertiary)/0.3)] hover:border-primary/60 transition-all duration-300 cursor-default whitespace-nowrap">
               <span className="text-xs md:text-sm font-medium text-foreground">{skill}</span>
             </div>
-          </motion.div>
+          </div>
         );
       })}
-    </motion.div>
+    </div>
   );
 }
 
@@ -78,10 +71,8 @@ const SkillsSection = () => {
           className="relative mx-auto flex items-center justify-center scale-[0.55] sm:scale-75 md:scale-90 lg:scale-100"
           style={{ height: 550, width: 550 }}
         >
-          {/* Subtle glow behind center */}
           <div className="absolute inset-0 m-auto w-40 h-40 rounded-full bg-primary/5 blur-3xl" />
 
-          {/* Center text */}
           <div className="relative z-10 text-center px-4">
             <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-2">
               My <span className="text-gradient">Skills</span>
@@ -91,7 +82,6 @@ const SkillsSection = () => {
             </p>
           </div>
 
-          {/* Orbit rings */}
           <OrbitRing items={innerRing} radius={160} duration={45} />
           <OrbitRing items={outerRing} radius={240} duration={60} reverse />
         </motion.div>
