@@ -45,7 +45,7 @@ const Navbar = () => {
             <a
               key={link.href}
               href={link.href}
-              className="text-sm text-muted-foreground hover:text-primary transition-colors duration-200 whitespace-nowrap"
+              className="text-sm text-muted-foreground hover:text-primary transition-colors duration-200 whitespace-nowrap px-3 py-1.5 rounded-lg shine-border"
             >
               {link.label}
             </a>
