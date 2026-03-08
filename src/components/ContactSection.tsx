@@ -77,7 +77,7 @@ const ContactSection = () => {
               value={form.name}
               onChange={(e) => setForm({ ...form, name: e.target.value })}
               required
-              className="w-full px-4 py-3 rounded-lg bg-muted border border-border text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/30 transition-all"
+              className="w-full px-4 py-3 rounded-lg bg-muted border border-border/30 text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/30 transition-all"
             />
             <input
               type="email"
@@ -85,7 +85,7 @@ const ContactSection = () => {
               value={form.email}
               onChange={(e) => setForm({ ...form, email: e.target.value })}
               required
-              className="w-full px-4 py-3 rounded-lg bg-muted border border-border text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/30 transition-all"
+              className="w-full px-4 py-3 rounded-lg bg-muted border border-border/30 text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/30 transition-all"
             />
             <textarea
               placeholder="Your Message"
@@ -93,11 +93,11 @@ const ContactSection = () => {
               onChange={(e) => setForm({ ...form, message: e.target.value })}
               required
               rows={5}
-              className="w-full px-4 py-3 rounded-lg bg-muted border border-border text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/30 transition-all resize-none"
+              className="w-full px-4 py-3 rounded-lg bg-muted border border-border/30 text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/30 transition-all resize-none"
             />
             <button
               type="submit"
-              className="w-full py-3.5 rounded-lg bg-secondary text-secondary-foreground font-medium flex items-center justify-center gap-2 hover:opacity-90 transition-all hover:scale-[1.02]"
+              className="w-full py-3.5 rounded-lg bg-accent text-accent-foreground font-medium flex items-center justify-center gap-2 hover:opacity-90 transition-all hover:scale-[1.02]"
             >
               Send Message <Send size={16} />
             </button>

@@ -30,9 +30,10 @@ const ProcessSection = () => {
 
         <div className="relative max-w-4xl mx-auto">
           {/* Beam line */}
-          <div className="absolute left-1/2 top-0 bottom-0 w-px bg-border hidden md:block" />
+          <div className="absolute left-1/2 top-0 bottom-0 w-px bg-border/30 hidden md:block" />
           <motion.div
-            className="absolute left-1/2 top-0 w-px bg-gradient-to-b from-primary to-secondary hidden md:block"
+            className="absolute left-1/2 top-0 w-px hidden md:block"
+            style={{ background: "linear-gradient(to bottom, hsl(var(--color-tertiary)), hsl(var(--color-accent)))" }}
             initial={{ height: 0 }}
             animate={inView ? { height: "100%" } : {}}
             transition={{ duration: 1.5, ease: "easeOut" }}

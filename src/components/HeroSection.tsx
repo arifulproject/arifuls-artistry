@@ -45,7 +45,7 @@ const HeroSection = () => {
         {[200, 300, 420].map((size, i) => (
           <div
             key={i}
-            className="absolute rounded-full border border-primary/10"
+            className="absolute rounded-full border border-primary/15"
             style={{ width: size, height: size }}
           >
             <motion.div
@@ -59,8 +59,8 @@ const HeroSection = () => {
       </div>
 
       {/* Glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full opacity-10 blur-3xl"
-        style={{ background: "radial-gradient(circle, hsl(187 94% 38% / 0.2), transparent 70%)" }}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full opacity-15 blur-3xl"
+        style={{ background: "radial-gradient(circle, hsl(var(--color-tertiary) / 0.3), transparent 70%)" }}
       />
 
       <div className="container mx-auto px-4 relative z-10 text-center">
@@ -92,7 +92,7 @@ const HeroSection = () => {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
               href="#portfolio"
-              className="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl bg-secondary text-secondary-foreground font-medium hover:opacity-90 transition-all hover:scale-105"
+              className="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl bg-accent text-accent-foreground font-medium hover:opacity-90 transition-all hover:scale-105"
             >
               View Work <ExternalLink size={16} />
             </a>
