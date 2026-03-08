@@ -1,67 +1,65 @@
 import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 
 const skills = [
-  { name: "WordPress", level: 95 },
-  { name: "Custom Plugins", level: 90 },
-  { name: "WooCommerce", level: 92 },
-  { name: "PHP", level: 88 },
-  { name: "JavaScript", level: 85 },
-  { name: "HTML/CSS", level: 95 },
-  { name: "Elementor", level: 93 },
-  { name: "SEO", level: 90 },
-  { name: "Speed Optimization", level: 92 },
-  { name: "API Integration", level: 85 },
-  { name: "Divi", level: 88 },
-  { name: "Crocoblock", level: 87 },
+  "WordPress", "PHP", "JavaScript", "HTML", "CSS", "WooCommerce",
+  "Elementor", "Crocoblock", "Divi", "API Integration", "SEO",
+  "Speed Optimization", "Custom Plugins",
 ];
 
-function CircularProgress({ name, level, delay }: { name: string; level: number; delay: number }) {
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true });
-  const radius = 40;
-  const circumference = 2 * Math.PI * radius;
-  const offset = circumference - (level / 100) * circumference;
+const innerRing = skills.slice(0, 6);
+const outerRing = skills.slice(6);
+
+function OrbitRing({
+  items,
+  radius,
+  duration,
+  reverse = false,
+}: {
+  items: string[];
+  radius: number;
+  duration: number;
+  reverse?: boolean;
+}) {
+  const [hovered, setHovered] = useState(false);
 
   return (
     <motion.div
-      ref={ref}
-      initial={{ opacity: 0, scale: 0.8 }}
-      animate={inView ? { opacity: 1, scale: 1 } : {}}
-      transition={{ duration: 0.5, delay }}
-      className="flex flex-col items-center gap-3 hover-lift"
+      className="absolute inset-0 m-auto rounded-full border border-border/20"
+      style={{ width: radius * 2, height: radius * 2 }}
+      animate={{ rotate: reverse ? -360 : 360 }}
+      transition={{
+        duration: hovered ? duration * 3 : duration,
+        repeat: Infinity,
+        ease: "linear",
+      }}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
     >
-      <div className="relative w-24 h-24">
-        <svg className="w-24 h-24 -rotate-90" viewBox="0 0 100 100">
-          <circle
-            cx="50" cy="50" r={radius}
-            fill="none"
-            className="stroke-muted"
-            strokeWidth="6"
-          />
-          <motion.circle
-            cx="50" cy="50" r={radius}
-            fill="none"
-            stroke="url(#skill-gradient)"
-            strokeWidth="6"
-            strokeLinecap="round"
-            strokeDasharray={circumference}
-            initial={{ strokeDashoffset: circumference }}
-            animate={inView ? { strokeDashoffset: offset } : {}}
-            transition={{ duration: 1.5, delay: delay + 0.2, ease: "easeOut" }}
-          />
-          <defs>
-            <linearGradient id="skill-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="hsl(var(--color-tertiary))" />
-              <stop offset="100%" stopColor="hsl(var(--color-accent))" />
-            </linearGradient>
-          </defs>
-        </svg>
-        <div className="absolute inset-0 flex items-center justify-center">
-          <span className="text-sm font-bold text-foreground">{level}%</span>
-        </div>
-      </div>
-      <span className="text-sm text-muted-foreground text-center font-medium">{name}</span>
+      {items.map((skill, i) => {
+        const angle = (360 / items.length) * i;
+        const rad = (angle * Math.PI) / 180;
+        const x = Math.cos(rad) * radius;
+        const y = Math.sin(rad) * radius;
+
+        return (
+          <motion.div
+            key={skill}
+            className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
+            style={{ x, y }}
+            animate={{ rotate: reverse ? 360 : -360 }}
+            transition={{
+              duration: hovered ? duration * 3 : duration,
+              repeat: Infinity,
+              ease: "linear",
+            }}
+          >
+            <div className="px-3 py-1.5 md:px-4 md:py-2 rounded-full bg-card/90 backdrop-blur-sm border border-border/40 shadow-sm hover:shadow-[0_0_20px_hsl(var(--color-tertiary)/0.3)] hover:border-primary/60 transition-all duration-300 cursor-default whitespace-nowrap">
+              <span className="text-xs md:text-sm font-medium text-foreground">{skill}</span>
+            </div>
+          </motion.div>
+        );
+      })}
     </motion.div>
   );
 }
@@ -71,25 +69,32 @@ const SkillsSection = () => {
   const inView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section id="skills" className="section-padding relative" ref={ref}>
+    <section id="skills" className="section-padding relative overflow-hidden" ref={ref}>
       <div className="container mx-auto px-4">
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={inView ? { opacity: 1, scale: 1 } : {}}
+          transition={{ duration: 0.8 }}
+          className="relative mx-auto flex items-center justify-center scale-[0.55] sm:scale-75 md:scale-90 lg:scale-100"
+          style={{ height: 550, width: 550 }}
         >
-          <p className="text-primary font-mono text-sm tracking-widest uppercase mb-3">Expertise</p>
-          <h2 className="text-3xl md:text-4xl font-bold">
-            My <span className="text-gradient">Skills</span>
-          </h2>
-        </motion.div>
+          {/* Subtle glow behind center */}
+          <div className="absolute inset-0 m-auto w-40 h-40 rounded-full bg-primary/5 blur-3xl" />
 
-        <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-8 max-w-4xl mx-auto">
-          {skills.map((skill, i) => (
-            <CircularProgress key={skill.name} {...skill} delay={i * 0.05} />
-          ))}
-        </div>
+          {/* Center text */}
+          <div className="relative z-10 text-center px-4">
+            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-2">
+              My <span className="text-gradient">Skills</span>
+            </h2>
+            <p className="text-xs md:text-sm text-muted-foreground max-w-[200px] mx-auto leading-relaxed">
+              Building a Seamless Integration Experience
+            </p>
+          </div>
+
+          {/* Orbit rings */}
+          <OrbitRing items={innerRing} radius={160} duration={45} />
+          <OrbitRing items={outerRing} radius={240} duration={60} reverse />
+        </motion.div>
       </div>
     </section>
   );
