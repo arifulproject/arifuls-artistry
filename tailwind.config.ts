@@ -93,8 +93,8 @@ export default {
           "50%": { transform: "translateY(-10px)" },
         },
         "pulse-glow": {
-          "0%, 100%": { boxShadow: "0 0 20px hsl(187 94% 43% / 0.2)" },
-          "50%": { boxShadow: "0 0 40px hsl(187 94% 43% / 0.4)" },
+          "0%, 100%": { boxShadow: "0 0 20px hsl(var(--color-tertiary) / 0.2)" },
+          "50%": { boxShadow: "0 0 40px hsl(var(--color-tertiary) / 0.4)" },
         },
         "marquee": {
           "0%": { transform: "translateX(0%)" },
@@ -110,7 +110,7 @@ export default {
         },
         "blink": {
           "0%, 100%": { borderColor: "transparent" },
-          "50%": { borderColor: "hsl(187 94% 43%)" },
+          "50%": { borderColor: "hsl(var(--color-tertiary))" },
         },
         "spin-slow": {
           "0%": { transform: "rotate(0deg)" },
