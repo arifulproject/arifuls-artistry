@@ -126,8 +126,8 @@ const PortfolioSection = () => {
               <div className="flex items-center gap-3">
                 <div className="flex gap-1.5">
                   <span className="w-3 h-3 rounded-full bg-destructive/80" />
-                  <span className="w-3 h-3 rounded-full bg-yellow-500/80" />
-                  <span className="w-3 h-3 rounded-full bg-green-500/80" />
+                  <span className="w-3 h-3 rounded-full" style={{ background: "hsl(45 93% 47% / 0.8)" }} />
+                  <span className="w-3 h-3 rounded-full" style={{ background: "hsl(142 71% 45% / 0.8)" }} />
                 </div>
                 <h3 className="text-sm font-semibold text-foreground">{previewProject.title}</h3>
                 <span className="text-xs text-muted-foreground hidden sm:inline">— {previewProject.desc}</span>
