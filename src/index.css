@@ -280,6 +280,21 @@
   }
 }
 
+@property --shine-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes shine-rotate {
+  0% {
+    --shine-angle: 0deg;
+  }
+  100% {
+    --shine-angle: 360deg;
+  }
+}
+
 @keyframes shine-sweep {
   0% {
     transform: translateX(-100%) rotate(0deg);
