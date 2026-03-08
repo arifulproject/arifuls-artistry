@@ -41,7 +41,7 @@ const TestimonialsSection = () => {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="max-w-2xl mx-auto"
         >
-          <div className="card-glass p-8 md:p-10 text-center relative">
+          <div className="card-glass p-8 md:p-10 text-center relative shine-border">
             <Quote className="mx-auto mb-6 text-primary/30" size={40} />
             <motion.p
               key={current}
@@ -64,7 +64,7 @@ const TestimonialsSection = () => {
           <div className="flex justify-center gap-4 mt-6">
             <button
               onClick={prev}
-              className="w-10 h-10 rounded-full border border-border flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary/50 transition-colors"
+              className="w-10 h-10 rounded-full border border-border flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary/50 transition-colors social-icon-hover"
             >
               <ChevronLeft size={18} />
             </button>
@@ -81,7 +81,7 @@ const TestimonialsSection = () => {
             </div>
             <button
               onClick={next}
-              className="w-10 h-10 rounded-full border border-border flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary/50 transition-colors"
+              className="w-10 h-10 rounded-full border border-border flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary/50 transition-colors social-icon-hover"
             >
               <ChevronRight size={18} />
             </button>

@@ -57,7 +57,7 @@ const Navbar = () => {
           <ThemeToggle />
           <a
             href="#contact"
-            className="px-5 py-2 rounded-lg bg-accent text-accent-foreground text-sm font-medium hover:opacity-90 transition-opacity"
+            className="px-5 py-2 rounded-lg bg-accent text-accent-foreground text-sm font-medium btn-premium"
           >
             Hire Me
           </a>

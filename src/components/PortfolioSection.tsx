@@ -48,7 +48,7 @@ const PortfolioSection = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.4, delay: i * 0.05 }}
-              className="group card-glass overflow-hidden hover-lift"
+              className="group card-glass overflow-hidden hover-lift shine-border"
             >
               <div className="relative overflow-hidden aspect-video">
                 <img
@@ -62,7 +62,7 @@ const PortfolioSection = () => {
                     href={project.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="px-5 py-2.5 rounded-lg bg-accent text-accent-foreground font-medium text-sm flex items-center gap-2 hover:opacity-90"
+                    className="px-5 py-2.5 rounded-lg bg-accent text-accent-foreground font-medium text-sm flex items-center gap-2 btn-premium"
                   >
                     Live Preview <ExternalLink size={14} />
                   </a>
@@ -87,7 +87,7 @@ const PortfolioSection = () => {
           <div className="text-center mt-10">
             <button
               onClick={() => setShowAll(true)}
-              className="px-8 py-3 rounded-xl border border-primary/30 text-primary font-medium hover:bg-primary/10 transition-all"
+              className="px-8 py-3 rounded-xl border border-primary/30 text-primary font-medium hover:bg-primary/10 transition-all btn-premium"
             >
               View All Projects
             </button>

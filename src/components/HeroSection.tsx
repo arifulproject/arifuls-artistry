@@ -92,13 +92,13 @@ const HeroSection = () => {
           <div className="flex flex-col sm:flex-row gap-4 justify-center sm:items-center">
             <a
               href="#portfolio"
-              className="inline-flex items-center justify-center gap-2 w-full sm:w-auto px-8 py-3.5 rounded-xl bg-accent text-accent-foreground font-medium hover:opacity-90 transition-all hover:scale-105"
+              className="inline-flex items-center justify-center gap-2 w-full sm:w-auto px-8 py-3.5 rounded-xl bg-accent text-accent-foreground font-medium btn-premium hover:scale-105"
             >
               View Work <ExternalLink size={16} />
             </a>
             <a
               href="#contact"
-              className="inline-flex items-center justify-center gap-2 w-full sm:w-auto px-8 py-3.5 rounded-xl border border-primary/30 text-primary font-medium hover:bg-primary/10 transition-all hover:scale-105"
+              className="inline-flex items-center justify-center gap-2 w-full sm:w-auto px-8 py-3.5 rounded-xl border border-primary/30 text-primary font-medium hover:bg-primary/10 btn-premium hover:scale-105"
             >
               Hire Me
             </a>
