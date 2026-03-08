@@ -17,7 +17,7 @@ import AdminSkills from "./pages/admin/AdminSkills";
 import AdminBlog from "./pages/admin/AdminBlog";
 import AdminFaqs from "./pages/admin/AdminFaqs";
 import AdminHero from "./pages/admin/AdminHero";
-import AdminSettings from "./pages/admin/AdminSettings";
+import AdminSetup from "./pages/AdminSetup";
 
 const queryClient = new QueryClient();
 
@@ -31,6 +31,7 @@ const App = () => (
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/admin/login" element={<AdminLogin />} />
+            <Route path="/admin/setup" element={<AdminSetup />} />
             <Route path="/admin" element={<AdminLayout><AdminDashboard /></AdminLayout>} />
             <Route path="/admin/services" element={<AdminLayout><AdminServices /></AdminLayout>} />
             <Route path="/admin/portfolio" element={<AdminLayout><AdminPortfolio /></AdminLayout>} />
