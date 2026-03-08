@@ -33,7 +33,7 @@ const Navbar = () => {
         scrolled ? "bg-background/80 backdrop-blur-xl border-b border-border/30 shadow-lg" : "bg-transparent"
       }`}
     >
-      <div className="w-full max-w-7xl mx-auto flex items-center justify-between h-16 px-6 md:px-8 lg:px-12">
+      <div className="container mx-auto flex items-center justify-between h-16">
         {/* Logo - left */}
         <a href="#home" className="text-xl font-bold text-gradient shrink-0">
           &lt;Ariful /&gt;
