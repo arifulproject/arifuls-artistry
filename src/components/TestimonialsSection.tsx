@@ -1,6 +1,7 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { Star, Quote } from "lucide-react";
+import ReviewSubmitForm from "./ReviewSubmitForm";
 
 import sarahImg from "@/assets/testimonials/sarah.jpg";
 import michaelImg from "@/assets/testimonials/michael.jpg";
@@ -149,6 +150,10 @@ const TestimonialsSection = () => {
           <VerticalMarquee items={mobileCol1} direction="up" />
           <VerticalMarquee items={mobileCol2} direction="up" />
         </motion.div>
+
+        <div className="text-center mt-10">
+          <ReviewSubmitForm />
+        </div>
       </div>
     </section>
   );
