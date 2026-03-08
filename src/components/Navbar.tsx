@@ -45,7 +45,7 @@ const Navbar = () => {
             <a
               key={link.href}
               href={link.href}
-              className="text-sm text-muted-foreground hover:text-primary transition-colors duration-200 whitespace-nowrap px-3 py-1.5 rounded-lg"
+              className="text-sm text-muted-foreground hover:text-primary hover:bg-primary/10 hover:shadow-[0_0_12px_hsl(var(--color-tertiary)/0.2)] hover:scale-105 transition-all duration-300 whitespace-nowrap px-3 py-1.5 rounded-lg"
             >
               {link.label}
             </a>
@@ -57,7 +57,7 @@ const Navbar = () => {
           <ThemeToggle />
           <a
             href="#contact"
-            className="px-5 py-2 rounded-lg bg-accent text-accent-foreground text-sm font-medium hover:opacity-90 transition-opacity"
+            className="px-5 py-2 rounded-lg bg-accent text-accent-foreground text-sm font-medium hover:scale-105 hover:shadow-[0_0_16px_hsl(var(--color-accent)/0.3)] transition-all duration-300"
           >
             Hire Me
           </a>
