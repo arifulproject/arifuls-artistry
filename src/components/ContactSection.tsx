@@ -2,16 +2,33 @@ import { motion, useInView } from "framer-motion";
 import { useRef, useState } from "react";
 import { Mail, MapPin, Send, Phone, Linkedin, Twitter, ExternalLink } from "lucide-react";
 import { toast } from "sonner";
+import { supabase } from "@/integrations/supabase/client";
 
 const ContactSection = () => {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-100px" });
   const [form, setForm] = useState({ name: "", email: "", message: "" });
+  const [sending, setSending] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    toast.success("Message sent! I'll get back to you soon.");
-    setForm({ name: "", email: "", message: "" });
+    if (!form.name.trim() || !form.email.trim() || !form.message.trim()) {
+      toast.error("Please fill all fields");
+      return;
+    }
+    setSending(true);
+    const { error } = await supabase.from("contact_messages").insert({
+      name: form.name.trim(),
+      email: form.email.trim(),
+      message: form.message.trim(),
+    });
+    if (error) {
+      toast.error("Failed to send message. Please try again.");
+    } else {
+      toast.success("Message sent! I'll get back to you soon.");
+      setForm({ name: "", email: "", message: "" });
+    }
+    setSending(false);
   };
 
   return (
@@ -81,6 +98,7 @@ const ContactSection = () => {
               value={form.name}
               onChange={(e) => setForm({ ...form, name: e.target.value })}
               required
+              maxLength={100}
               className="w-full px-4 py-3 rounded-lg bg-muted border border-border/30 text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/30 transition-all"
             />
             <input
@@ -89,6 +107,7 @@ const ContactSection = () => {
               value={form.email}
               onChange={(e) => setForm({ ...form, email: e.target.value })}
               required
+              maxLength={255}
               className="w-full px-4 py-3 rounded-lg bg-muted border border-border/30 text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/30 transition-all"
             />
             <textarea
@@ -97,13 +116,15 @@ const ContactSection = () => {
               onChange={(e) => setForm({ ...form, message: e.target.value })}
               required
               rows={5}
+              maxLength={1000}
               className="w-full px-4 py-3 rounded-lg bg-muted border border-border/30 text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/30 transition-all resize-none"
             />
             <button
               type="submit"
-              className="w-full py-3.5 rounded-lg bg-accent text-accent-foreground font-medium flex items-center justify-center gap-2 btn-premium hover:scale-[1.02]"
+              disabled={sending}
+              className="w-full py-3.5 rounded-lg bg-accent text-accent-foreground font-medium flex items-center justify-center gap-2 btn-premium hover:scale-[1.02] disabled:opacity-50"
             >
-              Send Message <Send size={16} />
+              {sending ? "Sending..." : "Send Message"} <Send size={16} />
             </button>
           </motion.form>
         </div>
