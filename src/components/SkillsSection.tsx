@@ -56,7 +56,7 @@ function OrbitRing({
             }}
           >
             <div className="px-2 py-1 sm:px-3 sm:py-1.5 md:px-4 md:py-2 rounded-full bg-card/90 backdrop-blur-sm border border-border/40 shadow-sm hover:shadow-[0_0_20px_hsl(var(--color-tertiary)/0.3)] hover:border-primary/60 transition-all duration-300 cursor-default whitespace-nowrap">
-              <span className="text-[10px] sm:text-xs md:text-sm font-medium text-foreground">{skill}</span>
+              <span className="text-[8px] sm:text-xs md:text-sm font-medium text-foreground">{skill}</span>
             </div>
           </motion.div>
         );
@@ -70,9 +70,9 @@ const SkillsSection = () => {
   const inView = useInView(ref, { once: true, margin: "-100px" });
   const isMobile = useIsMobile();
 
-  const innerRadius = isMobile ? 100 : 160;
-  const outerRadius = isMobile ? 155 : 240;
-  const containerSize = isMobile ? 350 : 550;
+  const innerRadius = isMobile ? 110 : 160;
+  const outerRadius = isMobile ? 170 : 240;
+  const containerSize = isMobile ? 400 : 550;
 
   return (
     <section id="skills" className="section-padding relative overflow-hidden" ref={ref}>
