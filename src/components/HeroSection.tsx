@@ -59,8 +59,8 @@ const HeroSection = () => {
       </div>
 
       {/* Glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full opacity-20 blur-3xl"
-        style={{ background: "radial-gradient(circle, hsl(187 94% 43% / 0.3), transparent 70%)" }}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full opacity-10 blur-3xl"
+        style={{ background: "radial-gradient(circle, hsl(187 94% 38% / 0.2), transparent 70%)" }}
       />
 
       <div className="container mx-auto px-4 relative z-10 text-center">
