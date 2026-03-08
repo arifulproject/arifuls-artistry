@@ -104,6 +104,14 @@ export default {
           "0%": { transform: "translateX(-50%)" },
           "100%": { transform: "translateX(0%)" },
         },
+        "scroll-up": {
+          "0%": { transform: "translateY(0)" },
+          "100%": { transform: "translateY(-50%)" },
+        },
+        "scroll-down": {
+          "0%": { transform: "translateY(-50%)" },
+          "100%": { transform: "translateY(0)" },
+        },
         "orbit": {
           "0%": { transform: "rotate(0deg) translateX(120px) rotate(0deg)" },
           "100%": { transform: "rotate(360deg) translateX(120px) rotate(-360deg)" },
@@ -135,6 +143,8 @@ export default {
         "pulse-glow": "pulse-glow 2s ease-in-out infinite",
         "marquee": "marquee 20s linear infinite",
         "marquee-reverse": "marquee-reverse 20s linear infinite",
+        "scroll-up": "scroll-up 40s linear infinite",
+        "scroll-down": "scroll-down 40s linear infinite",
         "orbit": "orbit 20s linear infinite",
         "spin-slow": "spin-slow 8s linear infinite",
         "counter": "counter 0.5s ease-out forwards",
