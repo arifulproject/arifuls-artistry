@@ -34,21 +34,26 @@ const Navbar = () => {
       }`}
     >
       <div className="w-full max-w-7xl mx-auto flex items-center justify-between h-16 px-6 md:px-8 lg:px-12">
-        <a href="#home" className="text-xl font-bold text-gradient">
+        {/* Logo - left */}
+        <a href="#home" className="text-xl font-bold text-gradient shrink-0">
           &lt;Ariful /&gt;
         </a>
 
-        {/* Desktop */}
-        <div className="hidden md:flex items-center gap-6">
+        {/* Desktop nav - centered */}
+        <div className="hidden md:flex items-center justify-center gap-5 flex-1">
           {navLinks.map((link) => (
             <a
               key={link.href}
               href={link.href}
-              className="text-sm text-muted-foreground hover:text-primary transition-colors duration-200"
+              className="text-sm text-muted-foreground hover:text-primary transition-colors duration-200 whitespace-nowrap"
             >
               {link.label}
             </a>
           ))}
+        </div>
+
+        {/* Right side - CTA + theme */}
+        <div className="hidden md:flex items-center gap-3 shrink-0">
           <ThemeToggle />
           <a
             href="#contact"
