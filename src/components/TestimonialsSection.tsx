@@ -77,7 +77,7 @@ const TestimonialsSection = () => {
         transition={{ duration: 0.6, delay: 0.2 }}
         className="space-y-6"
       >
-        {/* Row 1 - scrolls left */}
+        {/* Row 1 - scrolls right to left */}
         <div className="relative">
           <div className="flex gap-6 animate-marquee" style={{ width: "max-content" }}>
             {[...row1, ...row1].map((t, i) => (
@@ -86,15 +86,9 @@ const TestimonialsSection = () => {
           </div>
         </div>
 
-        {/* Row 2 - scrolls left slower */}
+        {/* Row 2 - scrolls left to right */}
         <div className="relative">
-          <div
-            className="flex gap-6"
-            style={{
-              width: "max-content",
-              animation: "marquee 45s linear infinite",
-            }}
-          >
+          <div className="flex gap-6 animate-marquee-reverse" style={{ width: "max-content" }}>
             {[...row2, ...row2].map((t, i) => (
               <ReviewCard key={`r2-${i}`} {...t} />
             ))}
