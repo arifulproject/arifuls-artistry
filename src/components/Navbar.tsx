@@ -33,7 +33,7 @@ const Navbar = () => {
         scrolled ? "bg-background/80 backdrop-blur-xl border-b border-border/30 shadow-lg" : "bg-transparent"
       }`}
     >
-      <div className="container mx-auto flex items-center justify-between h-16 px-4">
+      <div className="w-full max-w-7xl mx-auto flex items-center justify-between h-16 px-6 md:px-8 lg:px-12">
         <a href="#home" className="text-xl font-bold text-gradient">
           &lt;Ariful /&gt;
         </a>
