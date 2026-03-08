@@ -18,7 +18,7 @@ import AdminSkills from "./pages/admin/AdminSkills";
 import AdminBlog from "./pages/admin/AdminBlog";
 import AdminFaqs from "./pages/admin/AdminFaqs";
 import AdminHero from "./pages/admin/AdminHero";
-import AdminSetup from "./pages/AdminSetup";
+import AdminSettings from "./pages/admin/AdminSettings";
 
 const queryClient = new QueryClient();
 
