@@ -22,11 +22,35 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [loading, setLoading] = useState(true);
 
   const checkAdmin = async (userId: string) => {
-    const { data } = await supabase.rpc("has_role", {
+    const { data: hasAdminRole } = await supabase.rpc("has_role", {
       _user_id: userId,
       _role: "admin",
     });
-    setIsAdmin(!!data);
+
+    if (hasAdminRole) {
+      setIsAdmin(true);
+      return;
+    }
+
+    const { data: isFirstAdminSetup } = await supabase.rpc("is_first_admin_setup");
+
+    if (isFirstAdminSetup) {
+      const { error } = await supabase.from("user_roles").insert({
+        user_id: userId,
+        role: "admin",
+      });
+
+      if (!error || error.code === "23505") {
+        const { data: recheckAdminRole } = await supabase.rpc("has_role", {
+          _user_id: userId,
+          _role: "admin",
+        });
+        setIsAdmin(!!recheckAdminRole);
+        return;
+      }
+    }
+
+    setIsAdmin(false);
   };
 
   useEffect(() => {

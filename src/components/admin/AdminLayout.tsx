@@ -1,11 +1,20 @@
-import { ReactNode } from "react";
+import { ReactNode, useEffect, useRef } from "react";
 import { Navigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import AdminSidebar from "./AdminSidebar";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import { toast } from "sonner";
 
 const AdminLayout = ({ children }: { children: ReactNode }) => {
   const { user, isAdmin, loading } = useAuth();
+  const warnedRef = useRef(false);
+
+  useEffect(() => {
+    if (!loading && user && !isAdmin && !warnedRef.current) {
+      toast.error("Access denied: only admins can access the dashboard.");
+      warnedRef.current = true;
+    }
+  }, [loading, user, isAdmin]);
 
   if (loading) {
     return (
@@ -16,7 +25,7 @@ const AdminLayout = ({ children }: { children: ReactNode }) => {
   }
 
   if (!user) return <Navigate to="/admin/login" replace />;
-  if (!isAdmin) return <Navigate to="/" replace />;
+  if (!isAdmin) return <Navigate to="/admin/login" replace />;
 
   return (
     <SidebarProvider>
