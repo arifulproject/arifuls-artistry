@@ -13,11 +13,9 @@ const AdminSetup = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Check if any admin exists by trying to query user_roles
-    // If no admin exists, show setup form
     const check = async () => {
-      const { count } = await supabase.from("user_roles").select("id", { count: "exact", head: true });
-      setHasAdmin(count !== null && count > 0);
+      const { data } = await supabase.rpc("is_first_admin_setup");
+      setHasAdmin(data === false);
     };
     check();
   }, []);
@@ -43,37 +41,33 @@ const AdminSetup = () => {
     }
     setLoading(true);
 
-    // Sign up the admin user
-    const { data, error } = await supabase.auth.signUp({
-      email,
-      password,
-    });
+    try {
+      const { data, error } = await supabase.functions.invoke("bootstrap-admin", {
+        body: { email, password },
+      });
 
-    if (error || !data.user) {
-      toast.error(error?.message || "Failed to create account");
-      setLoading(false);
-      return;
+      if (error || data?.error) {
+        toast.error(data?.error || error?.message || "Failed to create admin");
+        setLoading(false);
+        return;
+      }
+
+      // Now sign in with the created credentials
+      const { error: signInError } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
+
+      if (signInError) {
+        toast.error("Admin created but login failed. Try logging in manually.");
+        navigate("/admin/login");
+      } else {
+        toast.success("Admin account created! Redirecting...");
+        navigate("/admin");
+      }
+    } catch (err: any) {
+      toast.error(err.message || "Setup failed");
     }
-
-    // Assign admin role — we need to do this through a direct insert
-    // Since RLS requires admin role to insert, and no admin exists yet,
-    // we use the service role approach through an edge function
-    // For initial setup, we'll use the signed-in user's session
-    const { error: roleError } = await supabase.from("user_roles").insert({
-      user_id: data.user.id,
-      role: "admin" as const,
-    });
-
-    if (roleError) {
-      // The RLS policy might block this since the user isn't admin yet
-      // We need to handle the bootstrap problem
-      toast.error("Admin role assignment failed. Please contact support or assign role manually in the database.");
-      setLoading(false);
-      return;
-    }
-
-    toast.success("Admin account created! Redirecting...");
-    navigate("/admin");
     setLoading(false);
   };
 
