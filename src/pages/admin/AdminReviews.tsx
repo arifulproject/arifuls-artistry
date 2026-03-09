@@ -1,16 +1,20 @@
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
-import { Check, X, Trash2, Star, Clock, CheckCircle, XCircle } from "lucide-react";
+import { Check, X, Trash2, Star, Clock, CheckCircle, XCircle, Pencil, Upload } from "lucide-react";
 import { Tables } from "@/integrations/supabase/types";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 
 type Review = Tables<"reviews">;
 
 const AdminReviews = () => {
   const [reviews, setReviews] = useState<Review[]>([]);
   const [tab, setTab] = useState("pending");
+  const [editing, setEditing] = useState<Partial<Review> | null>(null);
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [uploading, setUploading] = useState(false);
 
   const fetchReviews = async () => {
     const { data } = await supabase.from("reviews").select("*").order("created_at", { ascending: false });
@@ -32,11 +36,99 @@ const AdminReviews = () => {
     fetchReviews();
   };
 
+  const handlePhotoUpload = async (file: File) => {
+    setUploading(true);
+    const path = `reviews/${Date.now()}.${file.name.split(".").pop()}`;
+    const { error } = await supabase.storage.from("review-photos").upload(path, file);
+    if (error) { toast.error("Upload failed"); setUploading(false); return; }
+    const { data } = supabase.storage.from("review-photos").getPublicUrl(path);
+    setEditing({ ...editing, photo_url: data.publicUrl });
+    setUploading(false);
+  };
+
+  const handleSave = async () => {
+    if (!editing?.name || !editing?.review_text) { toast.error("Name and review text required"); return; }
+    if (editing.id) {
+      await supabase.from("reviews").update({
+        name: editing.name, role: editing.role, rating: editing.rating ?? 5,
+        review_text: editing.review_text, photo_url: editing.photo_url, status: editing.status ?? "pending",
+      }).eq("id", editing.id);
+      toast.success("Review updated");
+    } else {
+      await supabase.from("reviews").insert({
+        name: editing.name, role: editing.role, rating: editing.rating ?? 5,
+        review_text: editing.review_text, photo_url: editing.photo_url, status: editing.status ?? "approved",
+      });
+      toast.success("Review added");
+    }
+    setDialogOpen(false); setEditing(null); fetchReviews();
+  };
+
   const filtered = reviews.filter((r) => r.status === tab);
 
   return (
     <div>
-      <h1 className="text-2xl font-bold text-foreground mb-6">Reviews</h1>
+      <div className="flex items-center justify-between mb-6">
+        <h1 className="text-2xl font-bold text-foreground">Reviews</h1>
+        <Button onClick={() => { setEditing({}); setDialogOpen(true); }}>
+          <Star size={16} /> Add Review
+        </Button>
+      </div>
+
+      <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
+        <DialogContent className="max-w-lg max-h-[90vh] overflow-y-auto">
+          <DialogHeader><DialogTitle>{editing?.id ? "Edit Review" : "Add Review"}</DialogTitle></DialogHeader>
+          <div className="space-y-4">
+            <div>
+              <label className="text-sm font-medium text-foreground block mb-1">Name</label>
+              <input value={editing?.name || ""} onChange={(e) => setEditing({ ...editing, name: e.target.value })}
+                className="w-full px-3 py-2 rounded-lg bg-muted border border-border/30 text-foreground focus:outline-none focus:border-primary/50" />
+            </div>
+            <div>
+              <label className="text-sm font-medium text-foreground block mb-1">Role / Title</label>
+              <input value={editing?.role || ""} onChange={(e) => setEditing({ ...editing, role: e.target.value })}
+                className="w-full px-3 py-2 rounded-lg bg-muted border border-border/30 text-foreground focus:outline-none focus:border-primary/50" placeholder="e.g. CEO at Company" />
+            </div>
+            <div>
+              <label className="text-sm font-medium text-foreground block mb-1">Rating</label>
+              <div className="flex gap-1">
+                {[1, 2, 3, 4, 5].map((r) => (
+                  <button key={r} onClick={() => setEditing({ ...editing, rating: r })} className="p-1">
+                    <Star size={20} className={r <= (editing?.rating ?? 5) ? "fill-primary text-primary" : "text-muted-foreground"} />
+                  </button>
+                ))}
+              </div>
+            </div>
+            <div>
+              <label className="text-sm font-medium text-foreground block mb-1">Review Text</label>
+              <textarea value={editing?.review_text || ""} onChange={(e) => setEditing({ ...editing, review_text: e.target.value })}
+                rows={4} className="w-full px-3 py-2 rounded-lg bg-muted border border-border/30 text-foreground focus:outline-none focus:border-primary/50 resize-none" />
+            </div>
+            <div>
+              <label className="text-sm font-medium text-foreground block mb-1">Photo</label>
+              {editing?.photo_url && <img src={editing.photo_url} alt="" className="w-16 h-16 rounded-full object-cover mb-2" />}
+              <label className="flex items-center gap-2 px-4 py-2 rounded-lg bg-muted border border-dashed border-border cursor-pointer hover:border-primary/50">
+                <Upload size={16} className="text-muted-foreground" />
+                <span className="text-sm text-muted-foreground">{uploading ? "Uploading..." : "Upload photo"}</span>
+                <input type="file" accept="image/*" className="hidden" onChange={(e) => e.target.files?.[0] && handlePhotoUpload(e.target.files[0])} />
+              </label>
+            </div>
+            <div>
+              <label className="text-sm font-medium text-foreground block mb-1">Status</label>
+              <select value={editing?.status || "pending"} onChange={(e) => setEditing({ ...editing, status: e.target.value })}
+                className="w-full px-3 py-2 rounded-lg bg-muted border border-border/30 text-foreground focus:outline-none focus:border-primary/50">
+                <option value="pending">Pending</option>
+                <option value="approved">Approved</option>
+                <option value="rejected">Rejected</option>
+              </select>
+            </div>
+            <div className="flex justify-end gap-2">
+              <Button variant="outline" onClick={() => { setDialogOpen(false); setEditing(null); }}>Cancel</Button>
+              <Button onClick={handleSave} disabled={uploading}>Save</Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
 
       <Tabs value={tab} onValueChange={setTab}>
         <TabsList className="mb-4">
@@ -87,6 +179,9 @@ const AdminReviews = () => {
                         <X size={14} className="text-orange-500" />
                       </Button>
                     )}
+                    <Button variant="outline" size="icon" className="h-8 w-8" onClick={() => { setEditing(review); setDialogOpen(true); }}>
+                      <Pencil size={14} />
+                    </Button>
                     <Button variant="outline" size="icon" className="h-8 w-8" onClick={() => deleteReview(review.id)}>
                       <Trash2 size={14} className="text-destructive" />
                     </Button>
