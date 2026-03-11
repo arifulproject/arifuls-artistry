@@ -1,15 +1,7 @@
 import { motion, useInView } from "framer-motion";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { useIsMobile } from "@/hooks/use-mobile";
-
-const skills = [
-  "WordPress", "PHP", "JavaScript", "HTML", "CSS", "WooCommerce",
-  "Elementor", "Crocoblock", "Divi", "API Integration", "SEO",
-  "Speed Optimization", "Custom Plugins",
-];
-
-const innerRing = skills.slice(0, 6);
-const outerRing = skills.slice(6);
+import { supabase } from "@/integrations/supabase/client";
 
 function OrbitRing({
   items,
@@ -69,6 +61,15 @@ const SkillsSection = () => {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-100px" });
   const isMobile = useIsMobile();
+  const [skills, setSkills] = useState<string[]>([]);
+
+  useEffect(() => {
+    supabase.from("skills").select("name").eq("is_active", true).order("sort_order")
+      .then(({ data }) => { if (data) setSkills(data.map(s => s.name)); });
+  }, []);
+
+  const innerRing = skills.slice(0, Math.ceil(skills.length / 2));
+  const outerRing = skills.slice(Math.ceil(skills.length / 2));
 
   const innerRadius = isMobile ? 100 : 160;
   const outerRadius = isMobile ? 155 : 240;
@@ -95,8 +96,8 @@ const SkillsSection = () => {
             </p>
           </div>
 
-          <OrbitRing items={innerRing} radius={innerRadius} duration={45} />
-          <OrbitRing items={outerRing} radius={outerRadius} duration={60} reverse />
+          {innerRing.length > 0 && <OrbitRing items={innerRing} radius={innerRadius} duration={45} />}
+          {outerRing.length > 0 && <OrbitRing items={outerRing} radius={outerRadius} duration={60} reverse />}
         </motion.div>
       </div>
     </section>
