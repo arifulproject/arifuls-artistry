@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://ariful.github.io/arifuls-artistry",
+  "homepage": "https://arifulproject.github.io/arifuls-artistry",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
