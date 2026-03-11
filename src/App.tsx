@@ -27,7 +27,7 @@ const App = () => (
     <TooltipProvider>
       <Toaster />
       <Sonner />
-      <BrowserRouter>
+      <BrowserRouter basename="/arifuls-artistry">
         <AuthProvider>
           <Routes>
             <Route path="/" element={<Index />} />
