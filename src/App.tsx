@@ -27,7 +27,7 @@ const App = () => (
     <TooltipProvider>
       <Toaster />
       <Sonner />
-      <BrowserRouter basename="/arifuls-artistry">
+      <BrowserRouter basename={import.meta.env.PROD ? "/arifuls-artistry" : ""}>
         <AuthProvider>
           <Routes>
             <Route path="/" element={<Index />} />
