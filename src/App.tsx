@@ -26,6 +26,7 @@ const queryClient = new QueryClient();
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
+      <ThemeLoader />
       <Toaster />
       <Sonner />
       <BrowserRouter basename={import.meta.env.PROD ? "/arifuls-artistry" : ""}>
