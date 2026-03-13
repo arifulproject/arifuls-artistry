@@ -161,30 +161,24 @@ const AdminSettings = () => {
       )}
 
       {activeTab === "theme" && (
-        <div className="space-y-6 max-w-3xl">
-          {/* Preview strip */}
-          <div className="card-glass p-4">
-            <p className="text-sm text-muted-foreground mb-3">Live Preview</p>
-            <div className="flex gap-2 items-center">
-              {Object.keys(themeColorLabels).map((key) => (
-                <div
-                  key={key}
-                  className="h-10 flex-1 rounded-lg border border-border/20"
-                  style={{ backgroundColor: theme[key] || "#000" }}
-                />
-              ))}
+        <div className="space-y-6 max-w-4xl">
+          {/* Live Preview */}
+          <div className="card-glass p-5">
+            <p className="text-sm font-semibold text-foreground mb-3">Live Preview</p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <ThemeLivePreview
+                colors={theme}
+                mode="light"
+                headingFont={theme.theme_font_heading || "Space Grotesk"}
+                bodyFont={theme.theme_font_body || "Space Grotesk"}
+              />
+              <ThemeLivePreview
+                colors={theme}
+                mode="dark"
+                headingFont={theme.theme_font_heading || "Space Grotesk"}
+                bodyFont={theme.theme_font_body || "Space Grotesk"}
+              />
             </div>
-            <p className="text-xs text-muted-foreground mt-2 text-center">Light Mode Preview</p>
-            <div className="flex gap-2 items-center mt-2">
-              {Object.keys(darkThemeColorLabels).map((key) => (
-                <div
-                  key={key}
-                  className="h-10 flex-1 rounded-lg border border-border/20"
-                  style={{ backgroundColor: theme[key] || "#000" }}
-                />
-              ))}
-            </div>
-            <p className="text-xs text-muted-foreground mt-2 text-center">Dark Mode Preview</p>
           </div>
 
           {/* Light Mode Colors */}
@@ -192,9 +186,14 @@ const AdminSettings = () => {
             <h3 className="text-lg font-semibold text-foreground mb-4 flex items-center gap-2">
               <span className="w-3 h-3 rounded-full bg-yellow-400" /> Light Mode Colors
             </h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {Object.entries(themeColorLabels).map(([key, label]) => (
-                <ColorPicker key={key} themeKey={key} label={label} />
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+              {lightColorFields.map(({ key, label }) => (
+                <ThemeColorPicker
+                  key={key}
+                  label={label}
+                  color={theme[key] || "#000000"}
+                  onChange={(c) => updateThemeColor(key, c)}
+                />
               ))}
             </div>
           </div>
@@ -204,9 +203,14 @@ const AdminSettings = () => {
             <h3 className="text-lg font-semibold text-foreground mb-4 flex items-center gap-2">
               <span className="w-3 h-3 rounded-full bg-indigo-500" /> Dark Mode Colors
             </h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {Object.entries(darkThemeColorLabels).map(([key, label]) => (
-                <ColorPicker key={key} themeKey={key} label={label} />
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+              {darkColorFields.map(({ key, label }) => (
+                <ThemeColorPicker
+                  key={key}
+                  label={label}
+                  color={theme[key] || "#000000"}
+                  onChange={(c) => updateThemeColor(key, c)}
+                />
               ))}
             </div>
           </div>
@@ -242,11 +246,7 @@ const AdminSettings = () => {
 
           {/* Reset */}
           <div className="flex gap-3">
-            <Button
-              variant="outline"
-              onClick={() => setTheme(defaultTheme)}
-              className="text-sm"
-            >
+            <Button variant="outline" onClick={() => setTheme(defaultTheme)} className="text-sm">
               Reset to Default
             </Button>
           </div>
