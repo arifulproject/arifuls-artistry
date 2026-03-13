@@ -46,7 +46,7 @@ const ThemeColorPicker = ({ label, color, onChange }: ThemeColorPickerProps) => 
       </div>
 
       {isOpen && (
-        <div className="absolute z-50 mt-2 p-3 rounded-xl bg-card border border-border shadow-xl animate-fade-in">
+        <div className="absolute z-50 mt-2 p-3 rounded-xl bg-card border border-border shadow-xl animate-fade-in theme-color-picker">
           <HexColorPicker color={color || "#000000"} onChange={onChange} />
         </div>
       )}
