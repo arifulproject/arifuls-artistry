@@ -3,6 +3,8 @@ import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Save, Palette, Settings2, Type } from "lucide-react";
+import ThemeColorPicker from "@/components/admin/ThemeColorPicker";
+import ThemeLivePreview from "@/components/admin/ThemeLivePreview";
 
 const defaultSettings: Record<string, string> = {
   email: "arifullislam1312@gmail.com",
@@ -37,36 +39,24 @@ const defaultTheme: Record<string, string> = {
   theme_font_body: "Space Grotesk",
 };
 
-const themeColorLabels: Record<string, string> = {
-  theme_light_primary: "Background",
-  theme_light_secondary: "Text",
-  theme_light_tertiary: "Primary Accent",
-  theme_light_accent: "Secondary Accent",
-};
+const lightColorFields = [
+  { key: "theme_light_primary", label: "Background Color" },
+  { key: "theme_light_secondary", label: "Text Color" },
+  { key: "theme_light_tertiary", label: "Primary Accent" },
+  { key: "theme_light_accent", label: "Secondary Accent" },
+];
 
-const darkThemeColorLabels: Record<string, string> = {
-  theme_dark_primary: "Background",
-  theme_dark_secondary: "Text",
-  theme_dark_tertiary: "Primary Accent",
-  theme_dark_accent: "Secondary Accent",
-};
+const darkColorFields = [
+  { key: "theme_dark_primary", label: "Background Color" },
+  { key: "theme_dark_secondary", label: "Text Color" },
+  { key: "theme_dark_tertiary", label: "Primary Accent" },
+  { key: "theme_dark_accent", label: "Secondary Accent" },
+];
 
 const popularFonts = [
-  "Space Grotesk",
-  "Inter",
-  "Poppins",
-  "Roboto",
-  "Montserrat",
-  "Playfair Display",
-  "Raleway",
-  "Outfit",
-  "DM Sans",
-  "Nunito",
-  "Lato",
-  "Open Sans",
-  "Sora",
-  "Manrope",
-  "Plus Jakarta Sans",
+  "Space Grotesk", "Inter", "Poppins", "Roboto", "Montserrat",
+  "Playfair Display", "Raleway", "Outfit", "DM Sans", "Nunito",
+  "Lato", "Open Sans", "Sora", "Manrope", "Plus Jakarta Sans",
   "Bricolage Grotesque",
 ];
 
