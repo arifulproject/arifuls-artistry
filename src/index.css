@@ -2,6 +2,35 @@
 @tailwind components;
 @tailwind utilities;
 
+/* react-colorful overrides for proper rendering */
+.theme-color-picker .react-colorful {
+  width: 220px;
+  height: 220px;
+}
+
+.theme-color-picker .react-colorful__saturation {
+  border-radius: 8px 8px 0 0;
+  height: 170px;
+}
+
+.theme-color-picker .react-colorful__hue {
+  height: 20px;
+  border-radius: 0 0 8px 8px;
+  margin-top: 8px;
+}
+
+.theme-color-picker .react-colorful__saturation-pointer,
+.theme-color-picker .react-colorful__hue-pointer {
+  width: 20px;
+  height: 20px;
+  border: 3px solid white;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+}
+
+.theme-color-picker .react-colorful__interactive:focus .react-colorful__pointer {
+  transform: translate(-50%, -50%) scale(1.1);
+}
+
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
 @layer base {
