@@ -1,4 +1,5 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
+import { createPortal } from "react-dom";
 import { HexColorPicker, HexColorInput } from "react-colorful";
 
 interface ThemeColorPickerProps {
@@ -9,23 +10,47 @@ interface ThemeColorPickerProps {
 
 const ThemeColorPicker = ({ label, color, onChange }: ThemeColorPickerProps) => {
   const [isOpen, setIsOpen] = useState(false);
+  const triggerRef = useRef<HTMLButtonElement>(null);
   const popoverRef = useRef<HTMLDivElement>(null);
+  const [popoverPos, setPopoverPos] = useState({ top: 0, left: 0 });
+
+  const updatePosition = useCallback(() => {
+    if (triggerRef.current) {
+      const rect = triggerRef.current.getBoundingClientRect();
+      setPopoverPos({
+        top: rect.bottom + 8,
+        left: rect.left,
+      });
+    }
+  }, []);
 
   useEffect(() => {
+    if (!isOpen) return;
+    updatePosition();
     const handleClickOutside = (e: MouseEvent) => {
-      if (popoverRef.current && !popoverRef.current.contains(e.target as Node)) {
+      if (
+        popoverRef.current && !popoverRef.current.contains(e.target as Node) &&
+        triggerRef.current && !triggerRef.current.contains(e.target as Node)
+      ) {
         setIsOpen(false);
       }
     };
     document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
+    window.addEventListener("scroll", updatePosition, true);
+    window.addEventListener("resize", updatePosition);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      window.removeEventListener("scroll", updatePosition, true);
+      window.removeEventListener("resize", updatePosition);
+    };
+  }, [isOpen, updatePosition]);
 
   return (
-    <div className="relative" ref={popoverRef}>
+    <div>
       <label className="text-sm font-medium text-foreground block mb-1.5">{label}</label>
       <div className="flex items-center gap-3">
         <button
+          ref={triggerRef}
           type="button"
           onClick={() => setIsOpen(!isOpen)}
           className="w-12 h-12 rounded-xl border-2 border-border/40 cursor-pointer shadow-sm hover:shadow-md transition-shadow shrink-0"
@@ -45,10 +70,15 @@ const ThemeColorPicker = ({ label, color, onChange }: ThemeColorPickerProps) => 
         </div>
       </div>
 
-      {isOpen && (
-        <div className="absolute z-50 mt-2 p-3 rounded-xl bg-card border border-border shadow-xl animate-fade-in theme-color-picker">
+      {isOpen && createPortal(
+        <div
+          ref={popoverRef}
+          className="fixed p-3 rounded-xl bg-card border border-border shadow-xl animate-fade-in theme-color-picker"
+          style={{ top: popoverPos.top, left: popoverPos.left, zIndex: 9999 }}
+        >
           <HexColorPicker color={color || "#000000"} onChange={onChange} />
-        </div>
+        </div>,
+        document.body
       )}
     </div>
   );
