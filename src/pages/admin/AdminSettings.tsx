@@ -3,6 +3,8 @@ import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Save, Palette, Settings2, Type } from "lucide-react";
+import ThemeColorPicker from "@/components/admin/ThemeColorPicker";
+import ThemeLivePreview from "@/components/admin/ThemeLivePreview";
 
 const defaultSettings: Record<string, string> = {
   email: "arifullislam1312@gmail.com",
@@ -37,36 +39,24 @@ const defaultTheme: Record<string, string> = {
   theme_font_body: "Space Grotesk",
 };
 
-const themeColorLabels: Record<string, string> = {
-  theme_light_primary: "Background",
-  theme_light_secondary: "Text",
-  theme_light_tertiary: "Primary Accent",
-  theme_light_accent: "Secondary Accent",
-};
+const lightColorFields = [
+  { key: "theme_light_primary", label: "Background Color" },
+  { key: "theme_light_secondary", label: "Text Color" },
+  { key: "theme_light_tertiary", label: "Primary Accent" },
+  { key: "theme_light_accent", label: "Secondary Accent" },
+];
 
-const darkThemeColorLabels: Record<string, string> = {
-  theme_dark_primary: "Background",
-  theme_dark_secondary: "Text",
-  theme_dark_tertiary: "Primary Accent",
-  theme_dark_accent: "Secondary Accent",
-};
+const darkColorFields = [
+  { key: "theme_dark_primary", label: "Background Color" },
+  { key: "theme_dark_secondary", label: "Text Color" },
+  { key: "theme_dark_tertiary", label: "Primary Accent" },
+  { key: "theme_dark_accent", label: "Secondary Accent" },
+];
 
 const popularFonts = [
-  "Space Grotesk",
-  "Inter",
-  "Poppins",
-  "Roboto",
-  "Montserrat",
-  "Playfair Display",
-  "Raleway",
-  "Outfit",
-  "DM Sans",
-  "Nunito",
-  "Lato",
-  "Open Sans",
-  "Sora",
-  "Manrope",
-  "Plus Jakarta Sans",
+  "Space Grotesk", "Inter", "Poppins", "Roboto", "Montserrat",
+  "Playfair Display", "Raleway", "Outfit", "DM Sans", "Nunito",
+  "Lato", "Open Sans", "Sora", "Manrope", "Plus Jakarta Sans",
   "Bricolage Grotesque",
 ];
 
@@ -109,27 +99,9 @@ const AdminSettings = () => {
     setLoading(false);
   };
 
-  const ColorPicker = ({ label, themeKey }: { label: string; themeKey: string }) => (
-    <div className="flex items-center gap-3">
-      <div className="relative">
-        <input
-          type="color"
-          value={theme[themeKey] || "#000000"}
-          onChange={(e) => setTheme({ ...theme, [themeKey]: e.target.value })}
-          className="w-10 h-10 rounded-lg border border-border/30 cursor-pointer bg-transparent p-0.5"
-        />
-      </div>
-      <div className="flex-1">
-        <label className="text-sm font-medium text-foreground">{label}</label>
-        <input
-          value={theme[themeKey] || ""}
-          onChange={(e) => setTheme({ ...theme, [themeKey]: e.target.value })}
-          className="w-full px-2 py-1 mt-0.5 text-xs rounded bg-muted border border-border/30 text-foreground font-mono"
-          placeholder="#000000"
-        />
-      </div>
-    </div>
-  );
+  const updateThemeColor = (key: string, color: string) => {
+    setTheme((prev) => ({ ...prev, [key]: color }));
+  };
 
   return (
     <div>
@@ -189,30 +161,24 @@ const AdminSettings = () => {
       )}
 
       {activeTab === "theme" && (
-        <div className="space-y-6 max-w-3xl">
-          {/* Preview strip */}
-          <div className="card-glass p-4">
-            <p className="text-sm text-muted-foreground mb-3">Live Preview</p>
-            <div className="flex gap-2 items-center">
-              {Object.keys(themeColorLabels).map((key) => (
-                <div
-                  key={key}
-                  className="h-10 flex-1 rounded-lg border border-border/20"
-                  style={{ backgroundColor: theme[key] || "#000" }}
-                />
-              ))}
+        <div className="space-y-6 max-w-4xl">
+          {/* Live Preview */}
+          <div className="card-glass p-5">
+            <p className="text-sm font-semibold text-foreground mb-3">Live Preview</p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <ThemeLivePreview
+                colors={theme}
+                mode="light"
+                headingFont={theme.theme_font_heading || "Space Grotesk"}
+                bodyFont={theme.theme_font_body || "Space Grotesk"}
+              />
+              <ThemeLivePreview
+                colors={theme}
+                mode="dark"
+                headingFont={theme.theme_font_heading || "Space Grotesk"}
+                bodyFont={theme.theme_font_body || "Space Grotesk"}
+              />
             </div>
-            <p className="text-xs text-muted-foreground mt-2 text-center">Light Mode Preview</p>
-            <div className="flex gap-2 items-center mt-2">
-              {Object.keys(darkThemeColorLabels).map((key) => (
-                <div
-                  key={key}
-                  className="h-10 flex-1 rounded-lg border border-border/20"
-                  style={{ backgroundColor: theme[key] || "#000" }}
-                />
-              ))}
-            </div>
-            <p className="text-xs text-muted-foreground mt-2 text-center">Dark Mode Preview</p>
           </div>
 
           {/* Light Mode Colors */}
@@ -220,9 +186,14 @@ const AdminSettings = () => {
             <h3 className="text-lg font-semibold text-foreground mb-4 flex items-center gap-2">
               <span className="w-3 h-3 rounded-full bg-yellow-400" /> Light Mode Colors
             </h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {Object.entries(themeColorLabels).map(([key, label]) => (
-                <ColorPicker key={key} themeKey={key} label={label} />
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+              {lightColorFields.map(({ key, label }) => (
+                <ThemeColorPicker
+                  key={key}
+                  label={label}
+                  color={theme[key] || "#000000"}
+                  onChange={(c) => updateThemeColor(key, c)}
+                />
               ))}
             </div>
           </div>
@@ -232,9 +203,14 @@ const AdminSettings = () => {
             <h3 className="text-lg font-semibold text-foreground mb-4 flex items-center gap-2">
               <span className="w-3 h-3 rounded-full bg-indigo-500" /> Dark Mode Colors
             </h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {Object.entries(darkThemeColorLabels).map(([key, label]) => (
-                <ColorPicker key={key} themeKey={key} label={label} />
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+              {darkColorFields.map(({ key, label }) => (
+                <ThemeColorPicker
+                  key={key}
+                  label={label}
+                  color={theme[key] || "#000000"}
+                  onChange={(c) => updateThemeColor(key, c)}
+                />
               ))}
             </div>
           </div>
@@ -270,11 +246,7 @@ const AdminSettings = () => {
 
           {/* Reset */}
           <div className="flex gap-3">
-            <Button
-              variant="outline"
-              onClick={() => setTheme(defaultTheme)}
-              className="text-sm"
-            >
+            <Button variant="outline" onClick={() => setTheme(defaultTheme)} className="text-sm">
               Reset to Default
             </Button>
           </div>
