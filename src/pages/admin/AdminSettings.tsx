@@ -99,27 +99,9 @@ const AdminSettings = () => {
     setLoading(false);
   };
 
-  const ColorPicker = ({ label, themeKey }: { label: string; themeKey: string }) => (
-    <div className="flex items-center gap-3">
-      <div className="relative">
-        <input
-          type="color"
-          value={theme[themeKey] || "#000000"}
-          onChange={(e) => setTheme({ ...theme, [themeKey]: e.target.value })}
-          className="w-10 h-10 rounded-lg border border-border/30 cursor-pointer bg-transparent p-0.5"
-        />
-      </div>
-      <div className="flex-1">
-        <label className="text-sm font-medium text-foreground">{label}</label>
-        <input
-          value={theme[themeKey] || ""}
-          onChange={(e) => setTheme({ ...theme, [themeKey]: e.target.value })}
-          className="w-full px-2 py-1 mt-0.5 text-xs rounded bg-muted border border-border/30 text-foreground font-mono"
-          placeholder="#000000"
-        />
-      </div>
-    </div>
-  );
+  const updateThemeColor = (key: string, color: string) => {
+    setTheme((prev) => ({ ...prev, [key]: color }));
+  };
 
   return (
     <div>
