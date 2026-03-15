@@ -1,6 +1,5 @@
-import { useState, useRef, useEffect, useCallback } from "react";
-import { createPortal } from "react-dom";
-import { HexColorPicker, HexColorInput } from "react-colorful";
+import { HexColorInput, HexColorPicker } from "react-colorful";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 
 interface ThemeColorPickerProps {
   label: string;
@@ -8,78 +7,80 @@ interface ThemeColorPickerProps {
   onChange: (color: string) => void;
 }
 
+const HEX_6_REGEX = /^#?[0-9a-fA-F]{6}$/;
+
+const normalizeColor = (value: string) => {
+  if (HEX_6_REGEX.test(value)) {
+    return value.startsWith("#") ? value : `#${value}`;
+  }
+
+  return "#000000";
+};
+
 const ThemeColorPicker = ({ label, color, onChange }: ThemeColorPickerProps) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const triggerRef = useRef<HTMLButtonElement>(null);
-  const popoverRef = useRef<HTMLDivElement>(null);
-  const [popoverPos, setPopoverPos] = useState({ top: 0, left: 0 });
+  const resolvedColor = normalizeColor(color);
 
-  const updatePosition = useCallback(() => {
-    if (triggerRef.current) {
-      const rect = triggerRef.current.getBoundingClientRect();
-      setPopoverPos({
-        top: rect.bottom + 8,
-        left: rect.left,
-      });
-    }
-  }, []);
-
-  useEffect(() => {
-    if (!isOpen) return;
-    updatePosition();
-    const handleClickOutside = (e: MouseEvent) => {
-      if (
-        popoverRef.current && !popoverRef.current.contains(e.target as Node) &&
-        triggerRef.current && !triggerRef.current.contains(e.target as Node)
-      ) {
-        setIsOpen(false);
-      }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-    window.addEventListener("scroll", updatePosition, true);
-    window.addEventListener("resize", updatePosition);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-      window.removeEventListener("scroll", updatePosition, true);
-      window.removeEventListener("resize", updatePosition);
-    };
-  }, [isOpen, updatePosition]);
+  const handleColorChange = (next: string) => {
+    onChange(next.startsWith("#") ? next : `#${next}`);
+  };
 
   return (
-    <div>
-      <label className="text-sm font-medium text-foreground block mb-1.5">{label}</label>
+    <div className="overflow-visible">
+      <label className="mb-1.5 block text-sm font-medium text-foreground">{label}</label>
       <div className="flex items-center gap-3">
-        <button
-          ref={triggerRef}
-          type="button"
-          onClick={() => setIsOpen(!isOpen)}
-          className="w-12 h-12 rounded-xl border-2 border-border/40 cursor-pointer shadow-sm hover:shadow-md transition-shadow shrink-0"
-          style={{ backgroundColor: color || "#000000" }}
-          aria-label={`Pick ${label} color`}
-        />
+        <Popover>
+          <PopoverTrigger asChild>
+            <button
+              type="button"
+              className="h-12 w-12 shrink-0 cursor-pointer rounded-xl border-2 border-border/40 shadow-sm transition-shadow hover:shadow-md"
+              style={{ backgroundColor: resolvedColor }}
+              aria-label={`Pick ${label} color`}
+            />
+          </PopoverTrigger>
+
+          <PopoverContent
+            side="bottom"
+            align="start"
+            sideOffset={10}
+            className="theme-color-picker z-[9999] w-[252px] rounded-xl border border-border bg-card p-3 shadow-xl"
+          >
+            <div className="mb-3 flex items-center justify-between">
+              <span className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
+                {label}
+              </span>
+              <span
+                className="h-6 w-6 rounded-md border border-border/40"
+                style={{ backgroundColor: resolvedColor }}
+                aria-hidden="true"
+              />
+            </div>
+
+            <HexColorPicker color={resolvedColor} onChange={handleColorChange} />
+
+            <div className="mt-3 rounded-lg border border-border/30 bg-muted px-3 py-2">
+              <HexColorInput
+                color={resolvedColor}
+                onChange={handleColorChange}
+                prefixed
+                className="w-full bg-transparent font-mono text-sm uppercase text-foreground outline-none"
+                aria-label={`${label} hex value`}
+              />
+            </div>
+          </PopoverContent>
+        </Popover>
+
         <div className="flex-1">
-          <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-muted border border-border/30">
-            <span className="text-muted-foreground text-sm">#</span>
+          <div className="rounded-lg border border-border/30 bg-muted px-3 py-2">
             <HexColorInput
-              color={color || "#000000"}
-              onChange={onChange}
-              prefixed={false}
-              className="bg-transparent text-foreground font-mono text-sm w-full outline-none uppercase"
+              color={resolvedColor}
+              onChange={handleColorChange}
+              prefixed
+              className="w-full bg-transparent font-mono text-sm uppercase text-foreground outline-none"
+              aria-label={`${label} hex input`}
             />
           </div>
         </div>
       </div>
-
-      {isOpen && createPortal(
-        <div
-          ref={popoverRef}
-          className="fixed p-3 rounded-xl bg-card border border-border shadow-xl animate-fade-in theme-color-picker"
-          style={{ top: popoverPos.top, left: popoverPos.left, zIndex: 9999 }}
-        >
-          <HexColorPicker color={color || "#000000"} onChange={onChange} />
-        </div>,
-        document.body
-      )}
     </div>
   );
 };
