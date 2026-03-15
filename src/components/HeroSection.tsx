@@ -8,16 +8,26 @@ import wordpressLogo from "@/assets/logos/wordpress.png";
 import elementorLogo from "@/assets/logos/elementor.png";
 import woocommerceLogo from "@/assets/logos/woocommerce.png";
 import memberpressLogo from "@/assets/logos/memberpress.png";
-import yoastLogo from "@/assets/logos/yoast.png";
-import acfLogo from "@/assets/logos/acf.png";
+import reactLogo from "@/assets/logos/react.png";
+import javascriptLogo from "@/assets/logos/javascript.png";
+import canvaLogo from "@/assets/logos/canva.png";
+import figmaLogo from "@/assets/logos/figma.png";
+import webflowLogo from "@/assets/logos/webflow.png";
+import framerLogo from "@/assets/logos/framer.png";
+import behanceLogo from "@/assets/logos/behance.png";
 
 const orbitLogos = [
   { src: wordpressLogo, alt: "WordPress" },
   { src: elementorLogo, alt: "Elementor" },
   { src: woocommerceLogo, alt: "WooCommerce" },
   { src: memberpressLogo, alt: "MemberPress" },
-  { src: yoastLogo, alt: "Yoast SEO" },
-  { src: acfLogo, alt: "ACF" },
+  { src: reactLogo, alt: "React" },
+  { src: javascriptLogo, alt: "JavaScript" },
+  { src: canvaLogo, alt: "Canva" },
+  { src: figmaLogo, alt: "Figma" },
+  { src: webflowLogo, alt: "Webflow" },
+  { src: framerLogo, alt: "Framer" },
+  { src: behanceLogo, alt: "Behance" },
 ];
 
 const HeroSection = () => {
