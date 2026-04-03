@@ -3,6 +3,7 @@ import { useRef, useEffect, useState } from "react";
 import { Star, Quote } from "lucide-react";
 import ReviewSubmitForm from "./ReviewSubmitForm";
 import { supabase } from "@/integrations/supabase/client";
+import SectionEmptyState from "@/components/SectionEmptyState";
 
 interface Review {
   id: string;
@@ -68,7 +69,7 @@ const TestimonialsSection = () => {
 
   useEffect(() => {
     supabase.from("reviews").select("*").eq("status", "approved").order("created_at", { ascending: false })
-      .then(({ data }) => { if (data) setReviews(data as Review[]); });
+      .then(({ data }) => { setReviews((data as Review[]) ?? []); });
   }, []);
 
   const third = Math.ceil(reviews.length / 3);
@@ -95,7 +96,7 @@ const TestimonialsSection = () => {
           </h2>
         </motion.div>
 
-        {reviews.length > 0 && (
+        {reviews.length > 0 ? (
           <>
             <motion.div
               initial={{ opacity: 0 }}
@@ -118,6 +119,11 @@ const TestimonialsSection = () => {
               <VerticalMarquee items={mobileCol2} direction="up" />
             </motion.div>
           </>
+        ) : (
+          <SectionEmptyState
+            title="Client reviews will appear here"
+            description="Approved reviews from the admin dashboard will show here automatically, and visitors can still submit new testimonials below."
+          />
         )}
 
         <div className="text-center mt-10">

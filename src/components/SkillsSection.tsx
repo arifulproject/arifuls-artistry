@@ -2,6 +2,7 @@ import { motion, useInView } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { supabase } from "@/integrations/supabase/client";
+import SectionEmptyState from "@/components/SectionEmptyState";
 
 function OrbitRing({
   items,
@@ -65,7 +66,7 @@ const SkillsSection = () => {
 
   useEffect(() => {
     supabase.from("skills").select("name").eq("is_active", true).order("sort_order")
-      .then(({ data }) => { if (data) setSkills(data.map(s => s.name)); });
+      .then(({ data }) => { setSkills((data ?? []).map(s => s.name)); });
   }, []);
 
   const innerRing = skills.slice(0, Math.ceil(skills.length / 2));
@@ -92,13 +93,24 @@ const SkillsSection = () => {
               My <span className="text-gradient">Skills</span>
             </h2>
             <p className="text-xs md:text-sm text-muted-foreground max-w-[200px] mx-auto leading-relaxed">
-              Building a Seamless Integration Experience
+              {skills.length > 0
+                ? "Building a Seamless Integration Experience"
+                : "Add or activate skills from the admin dashboard to populate this orbit."}
             </p>
           </div>
 
           {innerRing.length > 0 && <OrbitRing items={innerRing} radius={innerRadius} duration={45} />}
           {outerRing.length > 0 && <OrbitRing items={outerRing} radius={outerRadius} duration={60} reverse />}
         </motion.div>
+
+        {skills.length === 0 && (
+          <div className="mt-10">
+            <SectionEmptyState
+              title="Skills will appear here"
+              description="The skills orbit is ready — add or activate skills in the admin dashboard and they will appear automatically."
+            />
+          </div>
+        )}
       </div>
     </section>
   );
