@@ -7,6 +7,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { supabase } from "@/integrations/supabase/client";
+import SectionEmptyState from "@/components/SectionEmptyState";
 
 const FAQSection = () => {
   const ref = useRef(null);
@@ -15,7 +16,7 @@ const FAQSection = () => {
 
   useEffect(() => {
     supabase.from("faqs").select("*").eq("is_active", true).order("sort_order")
-      .then(({ data }) => { if (data) setFaqs(data); });
+      .then(({ data }) => { setFaqs(data ?? []); });
   }, []);
 
   return (
@@ -41,22 +42,29 @@ const FAQSection = () => {
           transition={{ duration: 0.5, delay: 0.2 }}
           className="max-w-3xl mx-auto"
         >
-          <Accordion type="single" collapsible className="space-y-3">
-            {faqs.map((faq, i) => (
-              <AccordionItem
-                key={faq.id}
-                value={`item-${i}`}
-                className="card-glass px-6 border-none shine-border"
-              >
-                <AccordionTrigger className="text-left text-foreground hover:no-underline hover:text-primary text-sm md:text-base">
-                  {faq.question}
-                </AccordionTrigger>
-                <AccordionContent className="text-muted-foreground text-sm">
-                  {faq.answer}
-                </AccordionContent>
-              </AccordionItem>
-            ))}
-          </Accordion>
+          {faqs.length > 0 ? (
+            <Accordion type="single" collapsible className="space-y-3">
+              {faqs.map((faq, i) => (
+                <AccordionItem
+                  key={faq.id}
+                  value={`item-${i}`}
+                  className="card-glass px-6 border-none shine-border"
+                >
+                  <AccordionTrigger className="text-left text-foreground hover:no-underline hover:text-primary text-sm md:text-base">
+                    {faq.question}
+                  </AccordionTrigger>
+                  <AccordionContent className="text-muted-foreground text-sm">
+                    {faq.answer}
+                  </AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
+          ) : (
+            <SectionEmptyState
+              title="FAQs will appear here"
+              description="Add or activate frequently asked questions from the admin dashboard and they will show here automatically."
+            />
+          )}
         </motion.div>
       </div>
     </section>

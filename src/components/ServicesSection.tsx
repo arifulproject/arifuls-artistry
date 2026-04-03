@@ -5,6 +5,7 @@ import {
   Building, Home, Mic, Palette, Zap, Code2, LucideIcon
 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
+import SectionEmptyState from "@/components/SectionEmptyState";
 
 const iconMap: Record<string, LucideIcon> = {
   Globe, Puzzle, ShoppingCart, GraduationCap,
@@ -18,8 +19,10 @@ const ServicesSection = () => {
 
   useEffect(() => {
     supabase.from("services").select("*").eq("is_active", true).order("sort_order")
-      .then(({ data }) => { if (data) setServices(data); });
+      .then(({ data }) => { setServices(data ?? []); });
   }, []);
+
+  const hasServices = services.length > 0;
 
   return (
     <section id="services" className="section-padding" ref={ref}>
@@ -36,24 +39,31 @@ const ServicesSection = () => {
           </h2>
         </motion.div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 max-w-5xl mx-auto">
-          {services.map((service, i) => {
-            const Icon = iconMap[service.icon] || Globe;
-            return (
-              <motion.div
-                key={service.id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={inView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.4, delay: i * 0.05 }}
-                className={`card-glass p-6 group hover:border-primary/30 transition-all duration-300 hover-lift shine-border ${service.span}`}
-              >
-                <Icon className="text-primary mb-4 group-hover:scale-110 transition-transform" size={28} />
-                <h3 className="font-semibold text-foreground mb-2">{service.title}</h3>
-                <p className="text-sm text-muted-foreground">{service.description}</p>
-              </motion.div>
-            );
-          })}
-        </div>
+        {hasServices ? (
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 max-w-5xl mx-auto">
+            {services.map((service, i) => {
+              const Icon = iconMap[service.icon] || Globe;
+              return (
+                <motion.div
+                  key={service.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={inView ? { opacity: 1, y: 0 } : {}}
+                  transition={{ duration: 0.4, delay: i * 0.05 }}
+                  className={`card-glass p-6 group hover:border-primary/30 transition-all duration-300 hover-lift shine-border ${service.span}`}
+                >
+                  <Icon className="text-primary mb-4 group-hover:scale-110 transition-transform" size={28} />
+                  <h3 className="font-semibold text-foreground mb-2">{service.title}</h3>
+                  <p className="text-sm text-muted-foreground">{service.description}</p>
+                </motion.div>
+              );
+            })}
+          </div>
+        ) : (
+          <SectionEmptyState
+            title="Services will appear here"
+            description="Add or activate services from the admin dashboard and they will show on the homepage automatically."
+          />
+        )}
       </div>
     </section>
   );

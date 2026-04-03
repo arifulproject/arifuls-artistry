@@ -2,6 +2,7 @@ import { motion, useInView } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
 import { ExternalLink } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
+import SectionEmptyState from "@/components/SectionEmptyState";
 
 const PortfolioSection = () => {
   const ref = useRef(null);
@@ -11,10 +12,11 @@ const PortfolioSection = () => {
 
   useEffect(() => {
     supabase.from("portfolio_projects").select("*").eq("is_active", true).order("sort_order")
-      .then(({ data }) => { if (data) setProjects(data); });
+      .then(({ data }) => { setProjects(data ?? []); });
   }, []);
 
   const displayed = showAll ? projects : projects.slice(0, 6);
+  const hasProjects = displayed.length > 0;
 
   return (
     <section id="portfolio" className="section-padding" ref={ref}>
@@ -31,49 +33,56 @@ const PortfolioSection = () => {
           </h2>
         </motion.div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-          {displayed.map((project, i) => (
-            <motion.div
-              key={project.id}
-              initial={{ opacity: 0, y: 20 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.4, delay: i * 0.05 }}
-              className="group card-glass overflow-hidden hover-lift shine-border"
-            >
-              <div className="relative overflow-hidden aspect-video">
-                <img
-                  src={project.image_url}
-                  alt={project.title}
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                  loading="lazy"
-                />
-                <div className="absolute inset-0 bg-background/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                  {project.project_url && (
-                    <a
-                      href={project.project_url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="px-5 py-2.5 rounded-lg bg-accent text-accent-foreground font-medium text-sm flex items-center gap-2 btn-premium"
-                    >
-                      Live Preview <ExternalLink size={14} />
-                    </a>
-                  )}
+        {hasProjects ? (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+            {displayed.map((project, i) => (
+              <motion.div
+                key={project.id}
+                initial={{ opacity: 0, y: 20 }}
+                animate={inView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.4, delay: i * 0.05 }}
+                className="group card-glass overflow-hidden hover-lift shine-border"
+              >
+                <div className="relative overflow-hidden aspect-video">
+                  <img
+                    src={project.image_url || "/placeholder.svg"}
+                    alt={project.title}
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                    loading="lazy"
+                  />
+                  <div className="absolute inset-0 bg-background/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                    {project.project_url && (
+                      <a
+                        href={project.project_url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="px-5 py-2.5 rounded-lg bg-accent text-accent-foreground font-medium text-sm flex items-center gap-2 btn-premium"
+                      >
+                        Live Preview <ExternalLink size={14} />
+                      </a>
+                    )}
+                  </div>
                 </div>
-              </div>
-              <div className="p-5">
-                <h3 className="font-semibold text-foreground mb-1">{project.title}</h3>
-                <p className="text-sm text-muted-foreground mb-3">{project.description}</p>
-                <div className="flex flex-wrap gap-2">
-                  {(project.tech_stack || []).map((t: string) => (
-                    <span key={t} className="text-xs px-2.5 py-1 rounded-full bg-muted text-primary font-mono">
-                      {t}
-                    </span>
-                  ))}
+                <div className="p-5">
+                  <h3 className="font-semibold text-foreground mb-1">{project.title}</h3>
+                  <p className="text-sm text-muted-foreground mb-3">{project.description}</p>
+                  <div className="flex flex-wrap gap-2">
+                    {(project.tech_stack || []).map((t: string) => (
+                      <span key={t} className="text-xs px-2.5 py-1 rounded-full bg-muted text-primary font-mono">
+                        {t}
+                      </span>
+                    ))}
+                  </div>
                 </div>
-              </div>
-            </motion.div>
-          ))}
-        </div>
+              </motion.div>
+            ))}
+          </div>
+        ) : (
+          <SectionEmptyState
+            title="Projects will appear here"
+            description="Once portfolio items are added or activated in the admin dashboard, they will automatically show in this section."
+          />
+        )}
 
         {!showAll && projects.length > 6 && (
           <div className="text-center mt-10">
