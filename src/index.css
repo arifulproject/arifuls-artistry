@@ -371,12 +371,25 @@
   to { transform: rotate(360deg); }
 }
 
+@keyframes hero-orbit-spin-reverse {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(-360deg); }
+}
+
 .hero-orbit-ring {
   animation: hero-orbit-spin 30s linear infinite;
 }
 
 .hero-orbit-item {
   animation: hero-orbit-spin 30s linear infinite reverse;
+}
+
+.hero-orbit-ring-reverse {
+  animation: hero-orbit-spin-reverse 40s linear infinite;
+}
+
+.hero-orbit-item-reverse {
+  animation: hero-orbit-spin-reverse 40s linear infinite reverse;
 }
 
 /* Custom scrollbar */
