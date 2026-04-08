@@ -29,7 +29,7 @@ const App = () => (
       <ThemeLoader />
       <Toaster />
       <Sonner />
-      <BrowserRouter basename={import.meta.env.PROD ? "/arifuls-artistry" : ""}>
+      <BrowserRouter>
         <AuthProvider>
           <Routes>
             <Route path="/" element={<Index />} />
