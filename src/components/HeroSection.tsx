@@ -18,16 +18,13 @@ import behanceLogo from "@/assets/logos/behance.png";
 
 const orbitLogos = [
   { src: wordpressLogo, alt: "WordPress" },
-  { src: elementorLogo, alt: "Elementor" },
-  { src: woocommerceLogo, alt: "WooCommerce" },
-  { src: memberpressLogo, alt: "MemberPress" },
   { src: reactLogo, alt: "React" },
-  { src: javascriptLogo, alt: "JavaScript" },
-  { src: canvaLogo, alt: "Canva" },
+  { src: elementorLogo, alt: "Elementor" },
   { src: figmaLogo, alt: "Figma" },
+  { src: woocommerceLogo, alt: "WooCommerce" },
+  { src: canvaLogo, alt: "Canva" },
+  { src: memberpressLogo, alt: "MemberPress" },
   { src: webflowLogo, alt: "Webflow" },
-  { src: framerLogo, alt: "Framer" },
-  { src: behanceLogo, alt: "Behance" },
 ];
 
 const HeroSection = () => {
