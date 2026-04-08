@@ -8,20 +8,34 @@ import wordpressLogo from "@/assets/logos/wordpress.png";
 import elementorLogo from "@/assets/logos/elementor.png";
 import woocommerceLogo from "@/assets/logos/woocommerce.png";
 import memberpressLogo from "@/assets/logos/memberpress.png";
-import reactLogo from "@/assets/logos/react.png";
-import canvaLogo from "@/assets/logos/canva.png";
-import figmaLogo from "@/assets/logos/figma.png";
 import webflowLogo from "@/assets/logos/webflow.png";
+import wixLogo from "@/assets/logos/wix.png";
+import squarespaceLogo from "@/assets/logos/squarespace.png";
+import shopifyLogo from "@/assets/logos/shopify.png";
+import framerLogo from "@/assets/logos/framer.png";
+import yoastLogo from "@/assets/logos/yoast.png";
+import opencartLogo from "@/assets/logos/opencart.png";
+import diviLogo from "@/assets/logos/divi.png";
+import wpbakeryLogo from "@/assets/logos/wpbakery.png";
 
-const orbitLogos = [
+const outerOrbitLogos = [
   { src: wordpressLogo, alt: "WordPress" },
-  { src: reactLogo, alt: "React" },
   { src: elementorLogo, alt: "Elementor" },
-  { src: figmaLogo, alt: "Figma" },
   { src: woocommerceLogo, alt: "WooCommerce" },
-  { src: canvaLogo, alt: "Canva" },
   { src: memberpressLogo, alt: "MemberPress" },
   { src: webflowLogo, alt: "Webflow" },
+  { src: wixLogo, alt: "Wix" },
+  { src: squarespaceLogo, alt: "Squarespace" },
+  { src: shopifyLogo, alt: "Shopify" },
+];
+
+const innerOrbitLogos = [
+  { src: framerLogo, alt: "Framer" },
+  { src: yoastLogo, alt: "Yoast SEO" },
+  { src: opencartLogo, alt: "OpenCart" },
+  { src: diviLogo, alt: "Divi Builder" },
+  { src: wpbakeryLogo, alt: "WPBakery" },
+  { src: wixLogo, alt: "Wix eCommerce" },
 ];
 
 const HeroSection = () => {
