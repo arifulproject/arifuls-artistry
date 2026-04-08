@@ -9,12 +9,9 @@ import elementorLogo from "@/assets/logos/elementor.png";
 import woocommerceLogo from "@/assets/logos/woocommerce.png";
 import memberpressLogo from "@/assets/logos/memberpress.png";
 import reactLogo from "@/assets/logos/react.png";
-import javascriptLogo from "@/assets/logos/javascript.png";
 import canvaLogo from "@/assets/logos/canva.png";
 import figmaLogo from "@/assets/logos/figma.png";
 import webflowLogo from "@/assets/logos/webflow.png";
-import framerLogo from "@/assets/logos/framer.png";
-import behanceLogo from "@/assets/logos/behance.png";
 
 const orbitLogos = [
   { src: wordpressLogo, alt: "WordPress" },
