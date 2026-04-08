@@ -119,38 +119,42 @@ const HeroSection = () => {
             transition={{ duration: 0.8, delay: 0.2 }}
           >
             <div className="relative w-[320px] h-[320px] sm:w-[380px] sm:h-[380px] lg:w-[420px] lg:h-[420px]">
-              {/* Orbit ring */}
-              <div className="absolute inset-0 rounded-full border border-primary/20" />
+              {/* Orbit ring line */}
+              <div className="absolute inset-0 rounded-full border border-primary/15" />
 
-              {/* Orbiting logos */}
+              {/* Rotating container — spins the whole ring of logos */}
               <div className="absolute inset-0 hero-orbit-ring">
                 {orbitLogos.map((logo, i) => {
-                  const angle = (360 / logoCount) * i;
+                  const angle = (360 / orbitLogos.length) * i;
+                  const rad = (angle * Math.PI) / 180;
+                  // Position each logo on the circle edge using top/left %
+                  const x = 50 + 45 * Math.cos(rad); // 45% of container = orbit radius
+                  const y = 50 + 45 * Math.sin(rad);
                   return (
                     <div
                       key={logo.alt}
-                      className="absolute left-1/2 top-1/2 hero-orbit-item"
+                      className="absolute hero-orbit-item"
                       style={{
-                        transform: `rotate(${angle}deg) translateX(var(--hero-orbit-radius)) rotate(-${angle}deg)`,
-                        marginLeft: -22,
-                        marginTop: -22,
+                        left: `${x}%`,
+                        top: `${y}%`,
+                        transform: "translate(-50%, -50%)",
                       }}
                     >
                       <img
                         src={logo.src}
                         alt={logo.alt}
-                        className="w-11 h-11 rounded-full bg-card shadow-md border border-border/30 object-cover p-1"
+                        className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-card shadow-lg border border-border/40 object-cover p-1.5"
                       />
                     </div>
                   );
                 })}
               </div>
 
-              {/* Second subtle orbit ring */}
-              <div className="absolute inset-6 rounded-full border border-primary/10" />
+              {/* Inner subtle ring */}
+              <div className="absolute inset-8 rounded-full border border-primary/8" />
 
               {/* Profile image */}
-              <div className="absolute inset-12 sm:inset-14 lg:inset-16 rounded-full overflow-hidden border-2 border-primary/30 shadow-lg">
+              <div className="absolute inset-14 sm:inset-16 lg:inset-[72px] rounded-full overflow-hidden border-2 border-primary/25 shadow-xl">
                 <img
                   src={profilePhoto}
                   alt="Ariful - WordPress Developer"
@@ -159,7 +163,7 @@ const HeroSection = () => {
               </div>
 
               {/* Glow behind image */}
-              <div className="absolute inset-12 sm:inset-14 lg:inset-16 rounded-full opacity-30 blur-2xl -z-10"
+              <div className="absolute inset-14 sm:inset-16 lg:inset-[72px] rounded-full opacity-25 blur-2xl -z-10"
                 style={{ background: "radial-gradient(circle, hsl(var(--color-tertiary) / 0.4), transparent 70%)" }}
               />
             </div>
