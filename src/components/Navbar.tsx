@@ -1,22 +1,24 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
+import { Link, useLocation } from "react-router-dom";
 import ThemeToggle from "./ThemeToggle";
 
 const navLinks = [
-  { label: "Home", href: "#home" },
-  { label: "About", href: "#about" },
-  { label: "Skills", href: "#skills" },
-  { label: "Services", href: "#services" },
-  { label: "Portfolio", href: "#portfolio" },
-  { label: "Testimonials", href: "#testimonials" },
-  { label: "Blog", href: "#blog" },
-  { label: "Contact", href: "#contact" },
+  { label: "Home", href: "/" },
+  { label: "About", href: "/about" },
+  { label: "Skills", href: "/skills" },
+  { label: "Services", href: "/services" },
+  { label: "Portfolio", href: "/portfolio" },
+  { label: "Testimonials", href: "/testimonials" },
+  { label: "Blog", href: "/blog" },
+  { label: "Contact", href: "/contact" },
 ];
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const location = useLocation();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 50);
@@ -34,36 +36,34 @@ const Navbar = () => {
       }`}
     >
       <div className="container mx-auto flex items-center justify-between h-16">
-        {/* Logo - left */}
-        <a href="#home" className="text-xl font-bold text-gradient shrink-0">
+        <Link to="/" className="text-xl font-bold text-gradient shrink-0">
           &lt;Ariful /&gt;
-        </a>
+        </Link>
 
-        {/* Desktop nav - centered */}
         <div className="hidden md:flex items-center justify-center gap-5 flex-1">
           {navLinks.map((link) => (
-            <a
+            <Link
               key={link.href}
-              href={link.href}
-              className="text-sm text-muted-foreground hover:text-primary hover:bg-primary/10 hover:shadow-[0_0_12px_hsl(var(--color-tertiary)/0.2)] hover:scale-105 transition-all duration-300 whitespace-nowrap px-3 py-1.5 rounded-lg"
+              to={link.href}
+              className={`text-sm hover:text-primary hover:bg-primary/10 hover:shadow-[0_0_12px_hsl(var(--color-tertiary)/0.2)] hover:scale-105 transition-all duration-300 whitespace-nowrap px-3 py-1.5 rounded-lg ${
+                location.pathname === link.href ? "text-primary bg-primary/10" : "text-muted-foreground"
+              }`}
             >
               {link.label}
-            </a>
+            </Link>
           ))}
         </div>
 
-        {/* Right side - CTA + theme */}
         <div className="hidden md:flex items-center gap-3 shrink-0">
           <ThemeToggle />
-          <a
-            href="#contact"
+          <Link
+            to="/hire"
             className="px-5 py-2 rounded-lg bg-accent text-accent-foreground text-sm font-medium hover:scale-105 hover:shadow-[0_0_16px_hsl(var(--color-accent)/0.3)] transition-all duration-300"
           >
             Hire Me
-          </a>
+          </Link>
         </div>
 
-        {/* Mobile toggle */}
         <div className="flex items-center gap-3 md:hidden">
           <ThemeToggle />
           <button
@@ -75,7 +75,6 @@ const Navbar = () => {
         </div>
       </div>
 
-      {/* Mobile menu */}
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
@@ -86,15 +85,24 @@ const Navbar = () => {
           >
             <div className="flex flex-col gap-2 p-4">
               {navLinks.map((link) => (
-                <a
+                <Link
                   key={link.href}
-                  href={link.href}
+                  to={link.href}
                   onClick={() => setMobileOpen(false)}
-                  className="py-2 px-3 text-muted-foreground hover:text-primary transition-colors rounded-md hover:bg-muted/50"
+                  className={`py-2 px-3 transition-colors rounded-md hover:bg-muted/50 ${
+                    location.pathname === link.href ? "text-primary" : "text-muted-foreground hover:text-primary"
+                  }`}
                 >
                   {link.label}
-                </a>
+                </Link>
               ))}
+              <Link
+                to="/hire"
+                onClick={() => setMobileOpen(false)}
+                className="py-2 px-3 text-accent-foreground bg-accent rounded-md text-center font-medium mt-2"
+              >
+                Hire Me
+              </Link>
             </div>
           </motion.div>
         )}

@@ -20,6 +20,14 @@ import AdminBlog from "./pages/admin/AdminBlog";
 import AdminFaqs from "./pages/admin/AdminFaqs";
 import AdminHero from "./pages/admin/AdminHero";
 import AdminSettings from "./pages/admin/AdminSettings";
+import AboutPage from "./pages/AboutPage";
+import SkillsPage from "./pages/SkillsPage";
+import ServicesPage from "./pages/ServicesPage";
+import PortfolioPage from "./pages/PortfolioPage";
+import TestimonialsPage from "./pages/TestimonialsPage";
+import BlogPage from "./pages/BlogPage";
+import ContactPage from "./pages/ContactPage";
+import HireMePage from "./pages/HireMePage";
 
 const queryClient = new QueryClient();
 
@@ -33,6 +41,14 @@ const App = () => (
         <AuthProvider>
           <Routes>
             <Route path="/" element={<Index />} />
+            <Route path="/about" element={<AboutPage />} />
+            <Route path="/skills" element={<SkillsPage />} />
+            <Route path="/services" element={<ServicesPage />} />
+            <Route path="/portfolio" element={<PortfolioPage />} />
+            <Route path="/testimonials" element={<TestimonialsPage />} />
+            <Route path="/blog" element={<BlogPage />} />
+            <Route path="/contact" element={<ContactPage />} />
+            <Route path="/hire" element={<HireMePage />} />
             <Route path="/admin/login" element={<AdminLogin />} />
             <Route path="/admin/setup" element={<AdminSetup />} />
             <Route path="/admin" element={<AdminLayout><AdminDashboard /></AdminLayout>} />
