@@ -58,7 +58,12 @@ function OrbitRing({
   );
 }
 
-const SkillsSection = () => {
+interface SkillsSectionProps {
+  centerImage?: string;
+  centerImageAlt?: string;
+}
+
+const SkillsSection = ({ centerImage, centerImageAlt = "Profile" }: SkillsSectionProps = {}) => {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-100px" });
   const isMobile = useIsMobile();
@@ -88,16 +93,35 @@ const SkillsSection = () => {
         >
           <div className="absolute inset-0 m-auto w-40 h-40 rounded-full bg-primary/5 blur-3xl" />
 
-          <div className="relative z-10 text-center px-4">
-            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-2">
-              My <span className="text-gradient">Skills</span>
-            </h2>
-            <p className="text-xs md:text-sm text-muted-foreground max-w-[200px] mx-auto leading-relaxed">
-              {skills.length > 0
-                ? "Building a Seamless Integration Experience"
-                : "Add or activate skills from the admin dashboard to populate this orbit."}
-            </p>
-          </div>
+          {centerImage ? (
+            <div className="relative z-10 flex items-center justify-center">
+              <div
+                className="rounded-full overflow-hidden border-4 border-primary/30 shadow-[0_0_40px_hsl(var(--primary)/0.25)] bg-card"
+                style={{
+                  width: isMobile ? 140 : 220,
+                  height: isMobile ? 140 : 220,
+                }}
+              >
+                <img
+                  src={centerImage}
+                  alt={centerImageAlt}
+                  className="w-full h-full object-cover"
+                  loading="lazy"
+                />
+              </div>
+            </div>
+          ) : (
+            <div className="relative z-10 text-center px-4">
+              <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-2">
+                My <span className="text-gradient">Skills</span>
+              </h2>
+              <p className="text-xs md:text-sm text-muted-foreground max-w-[200px] mx-auto leading-relaxed">
+                {skills.length > 0
+                  ? "Building a Seamless Integration Experience"
+                  : "Add or activate skills from the admin dashboard to populate this orbit."}
+              </p>
+            </div>
+          )}
 
           {innerRing.length > 0 && <OrbitRing items={innerRing} radius={innerRadius} duration={45} />}
           {outerRing.length > 0 && <OrbitRing items={outerRing} radius={outerRadius} duration={60} reverse />}
