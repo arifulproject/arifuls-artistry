@@ -176,8 +176,8 @@ const HeroSection = () => {
               </div>
 
               {/* Profile image */}
-              <div className="absolute inset-[60px] sm:inset-[75px] lg:inset-[85px] rounded-full overflow-hidden border-2 border-primary/25 shadow-xl bg-card">
-                <img src={profilePhoto} alt="Ariful - WordPress Developer" className="w-full h-full object-cover object-center" />
+              <div className="absolute inset-[60px] sm:inset-[75px] lg:inset-[85px] rounded-full overflow-hidden border border-primary/30 shadow-xl flex items-center justify-center bg-transparent">
+                <img src={profilePhoto} alt="Ariful - WordPress Developer" className="w-full h-full object-contain object-center" />
               </div>
 
               {/* Glow behind image */}
